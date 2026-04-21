@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-comicneuesansid: 'ComicNeueSansID';
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+@font-face {
+    font-family: 'ComicNeueSansID';
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/ComicNeueSansID.ttf') format('truetype');
+}
+
