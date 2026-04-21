@@ -1,24 +1,38 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	const projects = [
 		{
 			name: 'Hunter Bot',
 			description: 'This is a bot that I made with Python that does a lot of quirky things.',
-			tags: ['Python'],
-			link: 'https://github.com'
-		},
-		{
-			name: 'Project Beta',
-			description: 'Another cool thing you built. Keep it short and punchy.',
 			tags: ['Python', 'Discord'],
 			link: 'https://github.com'
 		},
 		{
-			name: 'Project Gamma',
-			description: 'Your third showcase project. What problem did it solve?',
-			tags: ['Node.js', 'API'],
-			link: 'https://github.com'
+			name: 'Twitch Discord Bot',
+			description: 'A Discord bot that checks on a polling basis if a streamer is live.',
+			tags: ['Python', 'Discord'],
+			link: 'https://github.com/charmanita/twitch-discord-bot'
+		},
+		{
+			name: 'Minecraft Square Walk Macro',
+			description: 'This was my first GitHub project, it is just a macro.',
+			tags: ['Python'],
+			link: 'https://github.com/charmanita/minecraft-square-walk-macro'
 		}
 	];
+
+	let repoCount = $state<number | null>(null);
+
+	onMount(async () => {
+		try {
+			const res = await fetch('https://api.github.com/users/charmanita');
+			const data = await res.json();
+			repoCount = data.public_repos;
+		} catch {
+			// silently fail - stat will stay as '∞'
+		}
+	});
 </script>
 
 <main>
@@ -41,9 +55,9 @@
 			<p class="hero-eyebrow">// hello, world</p>
 			<h1>
 				<span class="line">Hunter Roberson</span>
-				<span class="line accent">Developer.</span>
+				<span class="line accent">Aspiring SysAdmin, dev on the side with a Raspberry Pi.</span>
 			</h1>
-			<p class="hero-sub">I build things for the web — and sometimes for fun.</p>
+			<p class="hero-sub">Computer Science student at Grayson College</p>
 		</div>
 		<div class="hero-grid-art" aria-hidden="true">
 			{#each Array(64) as _, i}
@@ -59,17 +73,25 @@
 			<div class="about-text">
 				<h2>Who I Am</h2>
 				<p>
-					Hey! I'm a developer who loves building things that actually work. Replace this with a
-					real bio — talk about what you care about, what you're learning, or what drives your work.
+					Heyo! My name is Hunter, I am from the North Texas area. I am currently going to Grayson
+					College for my associate's degree in Computer Science. I am planning to transfer over to
+					UNT afterwards to finish my bachelor's degree. I am wanting to be a system adminstrator in
+					the future.
 				</p>
 				<p>
-					When I'm not coding I'm probably doing something else cool. Add a personal detail or two
-					here to make it feel like a real human wrote this.
+					When I'm not coding, I'm usually playing games or making music with some of my good
+					friends!
 				</p>
 			</div>
 			<div class="about-stats">
 				<div class="stat">
-					<span class="stat-num">∞</span>
+					<span class="stat-num">
+						{#if repoCount !== null}
+							{repoCount}
+						{:else}
+							∞
+						{/if}
+					</span>
 					<span class="stat-label">projects shipped</span>
 				</div>
 				<div class="stat">
@@ -119,7 +141,12 @@
 				<span class="contact-icon">⌥</span>
 				<span>github.com/charmanita</span>
 			</a>
-			<a href="https://discord.com" target="_blank" rel="noopener" class="contact-item">
+			<a
+				href="http://discord.com/users/485957450009149451"
+				target="_blank"
+				rel="noopener"
+				class="contact-item"
+			>
 				<span class="contact-icon">#</span>
 				<span>charmanita on Discord</span>
 			</a>
