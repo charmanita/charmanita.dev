@@ -6,7 +6,7 @@
 			name: 'Hunter Bot',
 			description: 'This is a bot that I made with Python that does a lot of quirky things.',
 			tags: ['Python', 'Discord'],
-			link: 'https://github.com'
+			link: 'https://github.com/charmanita/hunter-bot'
 		},
 		{
 			name: 'Twitch Discord Bot',
