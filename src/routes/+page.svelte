@@ -55,9 +55,9 @@
 			<p class="hero-eyebrow">// hello, world</p>
 			<h1>
 				<span class="line">Hunter Roberson</span>
-				<span class="line accent">Aspiring SysAdmin, dev on the side with a Raspberry Pi.</span>
+				<span class="line accent">Computer Science student at Grayson College.</span>
 			</h1>
-			<p class="hero-sub">Computer Science student at Grayson College</p>
+			<p class="hero-sub">Aspiring SysAdmin, dev on the side with a Raspberry Pi.</p>
 		</div>
 		<div class="hero-grid-art" aria-hidden="true">
 			{#each Array(64) as _, i}
