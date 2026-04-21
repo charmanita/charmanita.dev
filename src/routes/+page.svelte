@@ -40,7 +40,7 @@
 		<div class="hero-content">
 			<p class="hero-eyebrow">// hello, world</p>
 			<h1>
-				<span class="line">Your Name</span>
+				<span class="line">Hunter Roberson</span>
 				<span class="line accent">Developer.</span>
 			</h1>
 			<p class="hero-sub">I build things for the web — and sometimes for fun.</p>
