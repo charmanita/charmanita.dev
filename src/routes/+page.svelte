@@ -35,6 +35,21 @@
 	});
 </script>
 
+<svelte:head>
+	<meta property="og:title" content="charmanita.dev" />
+	<meta
+		property="og:description"
+		content="CS student, aspiring SysAdmin, dev on the side with a Raspberry Pi."
+	/>
+	<meta property="og:url" content="https://charmanita-dev.hdroberson23.workers.dev/" />
+	<meta property="og:type" content="website" />
+	<meta
+		property="og:image"
+		content="https://charmanita-dev.hdroberson23.workers.dev/images/og-image.png"
+	/>
+	<meta name="theme-color" content="#00ff88" />
+	<meta property="og:site_name" content="charmanita.dev" />
+</svelte:head>
 <main>
 	<!-- Noise overlay -->
 	<div class="noise"></div>
