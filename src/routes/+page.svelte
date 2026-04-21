@@ -55,7 +55,7 @@
 			<p class="hero-eyebrow">// hello, world</p>
 			<h1>
 				<span class="line">Hunter Roberson</span>
-				<span class="line accent">Computer Science student at Grayson College.</span>
+				<span class="line accent">CompSci Student.</span>
 			</h1>
 			<p class="hero-sub">Aspiring SysAdmin, dev on the side with a Raspberry Pi.</p>
 		</div>
