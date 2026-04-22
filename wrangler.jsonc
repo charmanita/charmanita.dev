@@ -14,5 +14,6 @@
   "routes": [
     {"pattern": "charmanita.dev", "custom_domain": true},
     {"pattern": "www.charmanita.dev", "custom_domain": true}
-  ]
+  ],
+  "workers_dev": false
 }
