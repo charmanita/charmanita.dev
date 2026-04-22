@@ -17,6 +17,7 @@
 <main>
 	<div class="center">
 		<p class="name">charmanita.dev</p>
+		<a href="/about" class="about-link">about</a>
 		<div class="icons">
 			<!-- GitHub -->
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
@@ -114,6 +115,21 @@
 	.icons svg {
 		width: 20px;
 		height: 20px;
+	}
+
+	.about-link {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.75rem;
+		color: #444;
+		text-decoration: none;
+		letter-spacing: 0.1em;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.55s;
+		transition: color 0.2s ease;
+	}
+
+	.about-link:hover {
+		color: #fff;
 	}
 
 	@keyframes fadeIn {
