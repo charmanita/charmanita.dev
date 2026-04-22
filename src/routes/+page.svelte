@@ -15,6 +15,7 @@
 </svelte:head>
 
 <main>
+	<img class="bg-gif" src="/mii.gif" alt="" aria-hidden="true" />
 	<div class="center">
 		<p class="name">charmanita.dev</p>
 		<a href="/about" class="about-link">about</a>
@@ -130,6 +131,20 @@
 
 	.about-link:hover {
 		color: #fff;
+	}
+
+	.bg-gif {
+		position: fixed;
+		top: 50%;
+		bottom: 50%;
+		transform: translate(-50%, -50%);
+		width: min(420px, 80vw);
+		height: auto;
+		opacity: 0.08;
+		pointer-events: none;
+		user-select: none;
+		mix-blend-mode: screen;
+		filter: grayscale(1);
 	}
 
 	@keyframes fadeIn {
