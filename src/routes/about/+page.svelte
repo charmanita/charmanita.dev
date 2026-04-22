@@ -58,6 +58,29 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="contact">
+		<div class="section-label" style="margin-top: 4rem;">// contact</div>
+		<div class="contact-links">
+			<a href="mailto:hdroberson23@gmail.com" class="contact-item">
+				<span class="contact-icon">✉</span>
+				<span>hdroberson23@gmail.com</span>
+			</a>
+			<a href="https://github.com/charmanita" target="_blank" rel="noopener" class="contact-item">
+				<span class="contact-icon">⌥</span>
+				<span>github.com/charmanita</span>
+			</a>
+			<a
+				href="http://discord.com/users/485957450009149451"
+				target="_blank"
+				rel="noopener"
+				class="contact-item"
+			>
+				<span class="contact-icon">#</span>
+				<span>charmanita on Discord</span>
+			</a>
+		</div>
+	</div>
 </main>
 
 <style>
@@ -177,6 +200,45 @@
 		}
 	}
 
+	.contact-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-top: 1.5rem;
+	}
+
+	.contact-item {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.9rem;
+		color: #7a9ab0;
+		text-decoration: none;
+		padding: 0.9rem 1.25rem;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		transition:
+			color 0.2s,
+			border-color 0.2s;
+		max-width: 420px;
+	}
+	.contact-item:hover {
+		color: #00ff88;
+		border-color: rgba(0, 255, 136, 0.25);
+	}
+	.contact-icon {
+		color: #00ff88;
+		font-size: 1rem;
+		width: 1.25rem;
+		text-align: center;
+	}
+	@media (max-width: 600px) {
+		.contact-item {
+			max-width: 100%;
+			font-size: 0.8rem;
+			word-break: break-all;
+		}
+	}
 	@keyframes fadeIn {
 		from {
 			opacity: 0;
