@@ -1,47 +1,10 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-
-	const projects = [
-		{
-			name: 'Hunter Bot',
-			description: 'This is a bot that I made with Python that does a lot of quirky things.',
-			tags: ['Python', 'Discord'],
-			link: 'https://github.com/charmanita/hunter-bot'
-		},
-		{
-			name: 'Twitch Discord Bot',
-			description: 'A Discord bot that checks on a polling basis if a streamer is live.',
-			tags: ['Python', 'Discord'],
-			link: 'https://github.com/charmanita/twitch-discord-bot'
-		},
-		{
-			name: 'Minecraft Square Walk Macro',
-			description: 'This was my first GitHub project, it is just a macro.',
-			tags: ['Python'],
-			link: 'https://github.com/charmanita/minecraft-square-walk-macro'
-		}
-	];
-
-	let repoCount = $state<number | null>(null);
-
-	onMount(async () => {
-		try {
-			const res = await fetch('https://api.github.com/users/charmanita');
-			const data = await res.json();
-			repoCount = data.public_repos;
-		} catch {
-			// silently fail - stat will stay as '∞'
-		}
-	});
-</script>
-
 <svelte:head>
 	<meta property="og:title" content="charmanita.dev" />
 	<meta
 		property="og:description"
 		content="CS student, aspiring SysAdmin, dev on the side with a Raspberry Pi."
 	/>
-	<meta property="og:url" content="https://charmanita-dev.hdroberson23.workers.dev/" />
+	<meta property="og:url" content="https://charmanita.dev/" />
 	<meta property="og:type" content="website" />
 	<meta
 		property="og:image"
@@ -50,647 +13,117 @@
 	<meta name="theme-color" content="#00ff88" />
 	<meta property="og:site_name" content="charmanita.dev" />
 </svelte:head>
+
 <main>
-	<!-- Noise overlay -->
-	<div class="noise"></div>
-
-	<!-- Nav -->
-	<nav>
-		<span class="logo">charmanita.dev</span>
-		<div class="nav-links">
-			<a href="#about">about</a>
-			<a href="#projects">projects</a>
-			<a href="#contact">contact</a>
-		</div>
-	</nav>
-
-	<!-- Hero -->
-	<section class="hero">
-		<div class="hero-content">
-			<p class="hero-eyebrow">// hello, world</p>
-			<h1>
-				<span class="line">Hunter Roberson</span>
-				<span class="line accent">CompSci Student.</span>
-			</h1>
-			<p class="hero-sub">Aspiring SysAdmin, dev on the side with a Raspberry Pi.</p>
-		</div>
-		<div class="hero-grid-art" aria-hidden="true">
-			{#each Array(64) as _, i}
-				<div class="grid-cell" style="animation-delay: {(i * 37) % 2000}ms"></div>
-			{/each}
-		</div>
-	</section>
-
-	<!-- About -->
-	<section id="about" class="section about">
-		<div class="section-label">// 01 — about</div>
-		<div class="about-inner">
-			<div class="about-text">
-				<h2>Who I Am</h2>
-				<p>
-					Heyo! My name is Hunter, I am from the North Texas area. I am currently going to Grayson
-					College for my associate's degree in Computer Science. I am planning to transfer over to
-					UNT afterwards to finish my bachelor's degree. I am wanting to be a system adminstrator in
-					the future.
-				</p>
-				<p>
-					When I'm not coding, I'm usually playing games or making music with some of my good
-					friends!
-				</p>
-			</div>
-			<div class="about-stats">
-				<div class="stat">
-					<span class="stat-num">
-						{#if repoCount !== null}
-							{repoCount}
-						{:else}
-							∞
-						{/if}
-					</span>
-					<span class="stat-label">projects shipped</span>
-				</div>
-				<div class="stat">
-					<span class="stat-num">24/7</span>
-					<span class="stat-label">bot uptime</span>
-				</div>
-				<div class="stat">
-					<span class="stat-num">1</span>
-					<span class="stat-label">Raspberry Pi</span>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Projects -->
-	<section id="projects" class="section projects">
-		<div class="section-label">// 02 — projects</div>
-		<h2>Things I've Built</h2>
-		<div class="project-grid">
-			{#each projects as project, i}
-				<a href={project.link} class="project-card" target="_blank" rel="noopener">
-					<div class="card-index">0{i + 1}</div>
-					<h3>{project.name}</h3>
-					<p>{project.description}</p>
-					<div class="tags">
-						{#each project.tags as tag}
-							<span class="tag">{tag}</span>
-						{/each}
-					</div>
-					<div class="card-arrow">→</div>
-				</a>
-			{/each}
-		</div>
-	</section>
-
-	<!-- Contact -->
-	<section id="contact" class="section contact">
-		<div class="section-label">// 03 — contact</div>
-		<h2>Get In Touch</h2>
-		<p class="contact-sub">Have a project in mind, want to collaborate, or just want to say hi?</p>
-		<div class="contact-links">
-			<a href="mailto:hdroberson23@gmail.com" class="contact-item">
-				<span class="contact-icon">✉</span>
-				<span>hdroberson23@gmail.com</span>
+	<div class="center">
+		<p class="name">charmanita.dev</p>
+		<div class="icons">
+			<!-- GitHub -->
+			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
+				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"
+					/>
+				</svg>
 			</a>
-			<a href="https://github.com/charmanita" target="_blank" rel="noopener" class="contact-item">
-				<span class="contact-icon">⌥</span>
-				<span>github.com/charmanita</span>
-			</a>
+			<!-- Discord -->
 			<a
 				href="http://discord.com/users/485957450009149451"
 				target="_blank"
 				rel="noopener"
-				class="contact-item"
+				aria-label="Discord"
 			>
-				<span class="contact-icon">#</span>
-				<span>charmanita on Discord</span>
+				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+					/>
+				</svg>
+			</a>
+			<!-- X (Twitter) -->
+			<a href="https://x.com/charmanita_" target="_blank" rel="noopener" aria-label="X">
+				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+					/>
+				</svg>
 			</a>
 		</div>
-	</section>
-
-	<footer>
-		<span>built with SvelteKit + Tailwind · charmanita.dev</span>
-	</footer>
+	</div>
 </main>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Syne:wght@400;600;800&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-	:global(*) {
+	:global(*, *::before, *::after) {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
 	}
 
-	:global(html) {
-		scroll-behavior: smooth;
-	}
-
-	:global(body) {
-		background: #080b0f;
-		color: #c8d6e5;
-		font-family: 'Syne', sans-serif;
-		overflow-x: hidden;
-	}
-
-	/* Noise */
-	.noise {
-		position: fixed;
-		inset: 0;
-		pointer-events: none;
-		z-index: 100;
-		opacity: 0.03;
-		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-		background-size: 200px;
-	}
-
-	/* Nav */
-	nav {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 50;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1.25rem 3rem;
-		background: rgba(8, 11, 15, 0.85);
-		backdrop-filter: blur(12px);
-		border-bottom: 1px solid rgba(0, 255, 136, 0.06);
-	}
-
-	.logo {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.9rem;
-		color: #00ff88;
-		letter-spacing: 0.05em;
-	}
-
-	.nav-links {
-		display: flex;
-		gap: 2rem;
-	}
-
-	.nav-links a {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.8rem;
-		color: #5a7a8a;
-		text-decoration: none;
-		letter-spacing: 0.08em;
-		transition: color 0.2s;
-	}
-
-	.nav-links a:hover {
-		color: #00ff88;
-	}
-
-	/* Hero */
-	.hero {
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-		padding: 6rem 3rem 3rem;
-		position: relative;
+	:global(html, body) {
+		width: 100%;
+		height: 100%;
+		background: #000;
 		overflow: hidden;
 	}
 
-	.hero::before {
-		content: '';
-		position: absolute;
-		top: -20%;
-		right: -10%;
-		width: 600px;
-		height: 600px;
-		background: radial-gradient(circle, rgba(0, 255, 136, 0.07) 0%, transparent 70%);
-		pointer-events: none;
-	}
-
-	.hero-content {
-		position: relative;
-		z-index: 2;
-		max-width: 700px;
-	}
-
-	.hero-eyebrow {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.85rem;
-		color: #00ff88;
-		letter-spacing: 0.1em;
-		margin-bottom: 1.5rem;
-		opacity: 0;
-		animation: fadeUp 0.6s ease forwards 0.2s;
-	}
-
-	h1 {
-		font-family: 'Syne', sans-serif;
-		font-weight: 800;
-		font-size: clamp(3.5rem, 8vw, 7rem);
-		line-height: 0.95;
-		letter-spacing: -0.02em;
-		margin-bottom: 2rem;
-	}
-
-	.line {
-		display: block;
-		opacity: 0;
-		animation: fadeUp 0.7s ease forwards;
-	}
-
-	.line:nth-child(1) {
-		animation-delay: 0.4s;
-	}
-	.line:nth-child(2) {
-		animation-delay: 0.55s;
-	}
-
-	.accent {
-		color: #00ff88;
-	}
-
-	.hero-sub {
-		font-size: 1.15rem;
-		color: #5a7a8a;
-		max-width: 420px;
-		line-height: 1.7;
-		opacity: 0;
-		animation: fadeUp 0.7s ease forwards 0.75s;
-	}
-
-	/* Grid art */
-	.hero-grid-art {
-		position: absolute;
-		right: 3rem;
-		top: 50%;
-		transform: translateY(-50%);
-		display: grid;
-		grid-template-columns: repeat(8, 1fr);
-		gap: 6px;
-		opacity: 0.35;
-	}
-
-	.grid-cell {
-		width: 14px;
-		height: 14px;
-		border: 1px solid rgba(0, 255, 136, 0.2);
-		animation: pulse 3s ease-in-out infinite alternate;
-	}
-
-	@keyframes pulse {
-		0% {
-			background: transparent;
-			border-color: rgba(0, 255, 136, 0.1);
-		}
-		100% {
-			background: rgba(0, 255, 136, 0.15);
-			border-color: rgba(0, 255, 136, 0.5);
-		}
-	}
-
-	/* Sections */
-	.section {
-		padding: 6rem 3rem;
-		max-width: 1100px;
-		margin: 0 auto;
-	}
-
-	.section-label {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.75rem;
-		color: #00ff88;
-		letter-spacing: 0.15em;
-		margin-bottom: 1.5rem;
-		opacity: 0.7;
-	}
-
-	.section h2 {
-		font-size: clamp(2rem, 4vw, 3rem);
-		font-weight: 800;
-		letter-spacing: -0.02em;
-		margin-bottom: 2.5rem;
-	}
-
-	/* About */
-	.about-inner {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: 4rem;
-		align-items: start;
-	}
-
-	.about-text p {
-		color: #7a9ab0;
-		line-height: 1.8;
-		margin-bottom: 1rem;
-		font-size: 1.05rem;
-	}
-
-	.about-stats {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-		border-left: 1px solid rgba(0, 255, 136, 0.15);
-		padding-left: 2.5rem;
-	}
-
-	.stat {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.stat-num {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 2rem;
-		font-weight: 700;
-		color: #00ff88;
-		line-height: 1;
-	}
-
-	.stat-label {
-		font-size: 0.75rem;
-		color: #3d5a6a;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		margin-top: 0.3rem;
-	}
-
-	/* Projects */
-	.project-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1.5rem;
-	}
-
-	.project-card {
-		position: relative;
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.06);
-		padding: 2rem;
-		text-decoration: none;
-		color: inherit;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		transition:
-			border-color 0.25s,
-			background 0.25s;
-		overflow: hidden;
-	}
-
-	.project-card::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(135deg, rgba(0, 255, 136, 0.04), transparent);
-		opacity: 0;
-		transition: opacity 0.3s;
-	}
-
-	.project-card:hover {
-		border-color: rgba(0, 255, 136, 0.3);
-		background: rgba(0, 255, 136, 0.03);
-	}
-
-	.project-card:hover::before {
-		opacity: 1;
-	}
-
-	.card-index {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.7rem;
-		color: #00ff88;
-		opacity: 0.5;
-	}
-
-	.project-card h3 {
-		font-size: 1.3rem;
-		font-weight: 700;
-		letter-spacing: -0.01em;
-	}
-
-	.project-card p {
-		color: #5a7a8a;
-		font-size: 0.9rem;
-		line-height: 1.7;
-		flex: 1;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-	}
-
-	.tag {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.7rem;
-		padding: 0.2rem 0.6rem;
-		border: 1px solid rgba(0, 255, 136, 0.2);
-		color: #00ff88;
-		letter-spacing: 0.05em;
-	}
-
-	.card-arrow {
-		position: absolute;
-		bottom: 1.5rem;
-		right: 1.5rem;
-		font-size: 1.1rem;
-		color: #00ff88;
-		opacity: 0;
-		transform: translateX(-6px);
-		transition:
-			opacity 0.25s,
-			transform 0.25s;
-	}
-
-	.project-card:hover .card-arrow {
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	/* Contact */
-	.contact-sub {
-		color: #5a7a8a;
-		font-size: 1.05rem;
-		margin-bottom: 2.5rem;
-		margin-top: -1rem;
-	}
-
-	.contact-links {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.contact-item {
+	main {
+		width: 100%;
+		height: 100vh;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		justify-content: center;
+	}
+
+	.center {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.75rem;
+	}
+
+	.name {
 		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.95rem;
-		color: #7a9ab0;
-		text-decoration: none;
-		padding: 1rem 1.5rem;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		transition:
-			color 0.2s,
-			border-color 0.2s;
-		max-width: 420px;
+		font-size: clamp(1.1rem, 4vw, 1.6rem);
+		font-weight: 400;
+		color: #fff;
+		letter-spacing: 0.04em;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.1s;
 	}
 
-	.contact-item:hover {
-		color: #00ff88;
-		border-color: rgba(0, 255, 136, 0.25);
+	.icons {
+		display: flex;
+		gap: 1.75rem;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.35s;
 	}
 
-	.contact-icon {
-		color: #00ff88;
-		font-size: 1rem;
-		width: 1.5rem;
-		text-align: center;
+	.icons a {
+		color: #555;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: color 0.2s ease;
 	}
 
-	/* Footer */
-	footer {
-		text-align: center;
-		padding: 2rem 3rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.04);
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.75rem;
-		color: #2d4050;
+	.icons a:hover {
+		color: #fff;
 	}
 
-	/* Animations */
-	@keyframes fadeUp {
+	.icons svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	@keyframes fadeIn {
 		from {
 			opacity: 0;
-			transform: translateY(20px);
+			transform: translateY(6px);
 		}
 		to {
 			opacity: 1;
 			transform: translateY(0);
-		}
-	}
-
-	/* Responsive — tablet */
-	@media (max-width: 768px) {
-		nav {
-			padding: 1rem 1.5rem;
-		}
-
-		.nav-links {
-			gap: 1.25rem;
-		}
-
-		.hero {
-			padding: 5rem 1.5rem 3rem;
-		}
-
-		.hero-grid-art {
-			display: none;
-		}
-
-		.section {
-			padding: 4rem 1.5rem;
-		}
-
-		.about-inner {
-			grid-template-columns: 1fr;
-		}
-
-		.about-stats {
-			flex-direction: row;
-			flex-wrap: wrap;
-			border-left: none;
-			border-top: 1px solid rgba(0, 255, 136, 0.15);
-			padding-left: 0;
-			padding-top: 2rem;
-			gap: 1.5rem;
-		}
-
-		.project-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.contact-item {
-			max-width: 100%;
-		}
-	}
-
-	/* Responsive — mobile */
-	@media (max-width: 480px) {
-		nav {
-			padding: 0.9rem 1.25rem;
-		}
-
-		.logo {
-			font-size: 0.8rem;
-		}
-
-		.nav-links {
-			gap: 1rem;
-		}
-
-		.nav-links a {
-			font-size: 0.72rem;
-		}
-
-		.hero {
-			padding: 4.5rem 1.25rem 2.5rem;
-			min-height: 100svh;
-		}
-
-		.hero-eyebrow {
-			font-size: 0.75rem;
-			margin-bottom: 1rem;
-		}
-
-		.hero-sub {
-			font-size: 1rem;
-			max-width: 100%;
-		}
-
-		.section {
-			padding: 3rem 1.25rem;
-		}
-
-		.about-stats {
-			gap: 1.25rem;
-		}
-
-		.stat-num {
-			font-size: 1.6rem;
-		}
-
-		.contact-item {
-			font-size: 0.82rem;
-			padding: 0.85rem 1rem;
-			gap: 0.75rem;
-			word-break: break-all;
-		}
-
-		footer {
-			padding: 1.5rem 1.25rem;
-			font-size: 0.68rem;
-		}
-	}
-
-	/* Responsive — tiny (iPhone SE, Galaxy A series) */
-	@media (max-width: 360px) {
-		.nav-links a {
-			font-size: 0.68rem;
-		}
-
-		.nav-links {
-			gap: 0.75rem;
-		}
-
-		.section {
-			padding: 2.5rem 1rem;
-		}
-
-		.project-card {
-			padding: 1.5rem;
 		}
 	}
 </style>
