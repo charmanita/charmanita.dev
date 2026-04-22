@@ -572,29 +572,125 @@
 		}
 	}
 
-	/* Responsive */
+	/* Responsive — tablet */
 	@media (max-width: 768px) {
 		nav {
 			padding: 1rem 1.5rem;
 		}
+
+		.nav-links {
+			gap: 1.25rem;
+		}
+
 		.hero {
 			padding: 5rem 1.5rem 3rem;
 		}
+
 		.hero-grid-art {
 			display: none;
 		}
+
 		.section {
 			padding: 4rem 1.5rem;
 		}
+
 		.about-inner {
 			grid-template-columns: 1fr;
 		}
+
 		.about-stats {
 			flex-direction: row;
+			flex-wrap: wrap;
 			border-left: none;
 			border-top: 1px solid rgba(0, 255, 136, 0.15);
 			padding-left: 0;
 			padding-top: 2rem;
+			gap: 1.5rem;
+		}
+
+		.project-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-item {
+			max-width: 100%;
+		}
+	}
+
+	/* Responsive — mobile */
+	@media (max-width: 480px) {
+		nav {
+			padding: 0.9rem 1.25rem;
+		}
+
+		.logo {
+			font-size: 0.8rem;
+		}
+
+		.nav-links {
+			gap: 1rem;
+		}
+
+		.nav-links a {
+			font-size: 0.72rem;
+		}
+
+		.hero {
+			padding: 4.5rem 1.25rem 2.5rem;
+			min-height: 100svh;
+		}
+
+		.hero-eyebrow {
+			font-size: 0.75rem;
+			margin-bottom: 1rem;
+		}
+
+		.hero-sub {
+			font-size: 1rem;
+			max-width: 100%;
+		}
+
+		.section {
+			padding: 3rem 1.25rem;
+		}
+
+		.about-stats {
+			gap: 1.25rem;
+		}
+
+		.stat-num {
+			font-size: 1.6rem;
+		}
+
+		.contact-item {
+			font-size: 0.82rem;
+			padding: 0.85rem 1rem;
+			gap: 0.75rem;
+			word-break: break-all;
+		}
+
+		footer {
+			padding: 1.5rem 1.25rem;
+			font-size: 0.68rem;
+		}
+	}
+
+	/* Responsive — tiny (iPhone SE, Galaxy A series) */
+	@media (max-width: 360px) {
+		.nav-links a {
+			font-size: 0.68rem;
+		}
+
+		.nav-links {
+			gap: 0.75rem;
+		}
+
+		.section {
+			padding: 2.5rem 1rem;
+		}
+
+		.project-card {
+			padding: 1.5rem;
 		}
 	}
 </style>
