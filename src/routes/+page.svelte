@@ -136,7 +136,7 @@
 	.bg-gif {
 		position: fixed;
 		top: 50%;
-		bottom: 50%;
+		left: 50%;
 		transform: translate(-50%, -50%);
 		width: min(420px, 80vw);
 		height: auto;
