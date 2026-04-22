@@ -10,5 +10,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
-  }
+  },
+  "routes": [
+    {"pattern": "charmanita.dev", "custom_domain": true},
+    {"pattern": "www.charmanita.dev", "custom_domain": true}
+  ]
 }
