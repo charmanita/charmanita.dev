@@ -5,7 +5,7 @@
 	import Cookies from 'js-cookie';
 
 	let status = '';
-	let players = '';
+	let playerList: string[] = [];
 	let logs = '';
 	let command = '';
 	let commandResult = '';
@@ -25,7 +25,10 @@
 				apiFetch('/server/logs').then((r) => r.json())
 			]);
 			status = s.status;
-			players = p.result;
+			const match = p.result.match(/: (.+)$/);
+			playerList = match
+				? match[1].split(', ').map((n: string) => n.trim().replace('>', '').trim())
+				: [];
 			logs = l.logs;
 		} catch (e) {
 			status = 'error';
@@ -90,8 +93,19 @@
 	</section>
 
 	<section>
-		<h2>Players</h2>
-		<p>{players}</p>
+		<h2>Players ({playerList.length})</h2>
+		{#if playerList.length === 0}
+			<p>No players online</p>
+		{:else}
+			<div class="players">
+				{#each playerList as player}
+					<div class="player">
+						<img src={`https://mc-heads.net/avatar/${player}/32`} alt={player} />
+						<span>{player}</span>
+					</div>
+				{/each}
+			</div>
+		{/if}
 	</section>
 
 	<section>
@@ -166,5 +180,21 @@
 	}
 	.result {
 		color: #00ff88;
+	}
+	.players {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	.player {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: #0d0d1a;
+		padding: 0.5rem 1rem;
+		border-radius: 6px;
+	}
+	.player img {
+		image-rendering: pixelated;
 	}
 </style>
