@@ -11,7 +11,6 @@
 	let commandResult = '';
 	let whitelistPlayer = '';
 	let whitelistResult = '';
-
 	onMount(async () => {
 		if (!Cookies.get('token')) goto('/minecraft-server/admin');
 		await refreshStatus();
@@ -19,18 +18,23 @@
 
 	async function refreshStatus() {
 		try {
-			const [s, p, l] = await Promise.all([
+			const [s, l] = await Promise.all([
 				apiFetch('/server/status').then((r) => r.json()),
-				apiFetch('/server/players').then((r) => r.json()),
 				apiFetch('/server/logs').then((r) => r.json())
 			]);
+			const p = await apiFetch('/server/players').then((r) => r.json());
 			status = s.status;
-			const match = p.result.match(/: (.+)$/);
-			playerList = match
-				? match[1].split(', ').map((n: string) => n.trim().replace('>', '').trim())
-				: [];
+			const match = p.result.match(/online: (.+?)(?:\s*>\s*)?$/);
+			playerList =
+				match && match[1].trim()
+					? match[1]
+							.split(', ')
+							.map((n: string) => n.trim().replace('>', '').trim())
+							.filter(Boolean)
+					: [];
 			logs = l.logs;
 		} catch (e) {
+			console.error('refreshStatus error:', e);
 			status = 'error';
 		}
 	}
@@ -100,7 +104,7 @@
 			<div class="players">
 				{#each playerList as player}
 					<div class="player">
-						<img src={`https://mc-heads.net/avatar/${player}/32`} alt={player} />
+						<img src={`https://mcapi.charmanita.dev/public/avatar/${player}`} alt={player} />
 						<span>{player}</span>
 					</div>
 				{/each}
