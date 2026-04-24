@@ -77,6 +77,13 @@
 			</div>
 			<div class="divider"></div>
 			<div class="row">
+				<span class="label">status</span>
+				<span class="value {serverOnline ? 'online' : 'offline'}"
+					>{serverOnline ? 'online' : 'offline'}</span
+				>
+			</div>
+			<div class="divider"></div>
+			<div class="row">
 				<span class="label">players</span>
 				<span class="value">{playerCount}</span>
 			</div>
