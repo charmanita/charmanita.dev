@@ -243,6 +243,13 @@
 	.admin-link:hover {
 		color: #fff;
 	}
+	.online {
+		color: #00ff88;
+	}
+
+	.offline {
+		color: #ff4444;
+	}
 
 	@keyframes fadeIn {
 		from {
