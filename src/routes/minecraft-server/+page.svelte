@@ -64,7 +64,7 @@
 			<div class="divider"></div>
 			<div class="row">
 				<span class="label">version</span>
-				<span class="value">1.21.10 (java)</span>
+				<span class="value">1.21.11 (java)</span>
 			</div>
 			<div class="divider"></div>
 			<div class="row">
