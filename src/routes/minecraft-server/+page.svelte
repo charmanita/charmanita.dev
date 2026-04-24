@@ -1,5 +1,7 @@
 <script lang="ts">
 	let copied = false;
+	let serverOnline = false;
+	let version = '1.21.11';
 
 	function copy(text: string) {
 		navigator.clipboard.writeText(text).then(() => {
@@ -13,22 +15,24 @@
 	let interval: ReturnType<typeof setInterval>;
 
 	onMount(async () => {
-		await fetchPlayers();
-		interval = setInterval(fetchPlayers, 30000);
+		await fetchStatus();
+		interval = setInterval(fetchStatus, 30000);
 	});
 
 	onDestroy(() => {
 		clearInterval(interval);
 	});
 
-	async function fetchPlayers() {
+	async function fetchStatus() {
 		try {
-			const res = await fetch('https://mcapi.charmanita.dev/public/players');
+			const res = await fetch('https://mcapi.charmanita.dev/public/status');
 			const data = await res.json();
-			const match = data.result?.match(/There are (\d+) of a max of (\d+)/);
-			if (match) playerCount = `${match[1]} / ${match[2]}`;
+			playerCount = `${data.current_players} / ${data.max_players}`;
+			serverOnline = data.online;
+			version = data.version;
 		} catch {
-			playerCount = '? / 20';
+			playerCount = '? / ?';
+			serverOnline = false;
 		}
 	}
 </script>
