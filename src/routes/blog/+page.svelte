@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { getPosts, type PostMeta } from '$lib/posts';
-	let posts: PostMeta[] = [];
-	getPosts().then((p) => (posts = p));
 	import { formatDate } from '$lib/utils';
+	let posts: PostMeta[] = [];
+	getPosts().then((p) => {
+		console.log(p);
+		posts = p;
+	});
 </script>
 
 <svelte:head>
@@ -17,13 +20,7 @@
 			{#each posts as post}
 				<a href="/blog/{post.slug}" class="post">
 					<span class="post-title">{post.title}</span>
-					<span class="post-date">
-						{new Date(post.date).toLocaleDateString('en-US', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric'
-						})}
-					</span>
+					<span class="post-date">{formatDate(post.date)}</span>
 					<p class="post-desc">{post.description}</p>
 				</a>
 			{/each}
