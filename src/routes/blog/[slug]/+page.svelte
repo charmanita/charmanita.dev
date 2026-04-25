@@ -11,7 +11,13 @@
 		<a href="/blog" class="back">← back</a>
 		<header>
 			<h1 class="title">{data.meta.title}</h1>
-			<time class="date">{data.meta.date}</time>
+			<time class="date">
+				{new Date(data.meta.date).toLocaleDateString('en-US', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric'
+				})}
+			</time>
 		</header>
 		<article class="prose">
 			<svelte:component this={data.content} />

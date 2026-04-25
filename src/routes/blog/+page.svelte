@@ -16,7 +16,13 @@
 			{#each posts as post}
 				<a href="/blog/{post.slug}" class="post">
 					<span class="post-title">{post.title}</span>
-					<span class="post-date">{post.date}</span>
+					<span class="post-date">
+						{new Date(post.date).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						})}
+					</span>
 					<p class="post-desc">{post.description}</p>
 				</a>
 			{/each}
