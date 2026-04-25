@@ -19,6 +19,7 @@
 	<div class="center">
 		<p class="name">charmanita.dev</p>
 		<a href="/about" class="about-link">about</a>
+		<a href="/blog" class="blog-link">blog</a>
 		<a href="/minecraft-server" class="minecraft-server-link">minecraft server</a>
 		<div class="icons">
 			<!-- GitHub -->
@@ -142,6 +143,21 @@
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.55s;
 		transition: color 0.2s ease;
+	}
+
+	.blog-link {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.75rem;
+		color: #444;
+		text-decoration: none;
+		letter-spacing: 0.1em;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.55s;
+		transition: color 0.2s ease;
+	}
+
+	.blog-link:hover {
+		color: #fff;
 	}
 
 	.minecraft-server-link:hover {
