@@ -2,6 +2,7 @@
 	import { getPosts, type PostMeta } from '$lib/posts';
 	let posts: PostMeta[] = [];
 	getPosts().then((p) => (posts = p));
+	import { formatDate } from '$lib/utils';
 </script>
 
 <svelte:head>
