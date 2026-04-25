@@ -70,15 +70,6 @@
 				<span class="contact-icon">⌥</span>
 				<span>github.com/charmanita</span>
 			</a>
-			<a
-				href="http://discord.com/users/485957450009149451"
-				target="_blank"
-				rel="noopener"
-				class="contact-item"
-			>
-				<span class="contact-icon">#</span>
-				<span>charmanita on Discord</span>
-			</a>
 		</div>
 	</div>
 </main>
