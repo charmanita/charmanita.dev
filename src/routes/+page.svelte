@@ -47,7 +47,6 @@
 		width: 100%;
 		height: 100%;
 		background: #000;
-		overflow: hidden;
 	}
 
 	main {
@@ -56,6 +55,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		overflow: hidden;
 	}
 
 	.center {
