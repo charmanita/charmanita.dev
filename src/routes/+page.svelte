@@ -6,10 +6,7 @@
 	/>
 	<meta property="og:url" content="https://charmanita.dev/" />
 	<meta property="og:type" content="website" />
-	<meta
-		property="og:image"
-		content="https://charmanita-dev.hdroberson23.workers.dev/images/og-image.png"
-	/>
+	<meta property="og:image" content="https://charmanita.dev/images/og-image.png" />
 	<meta name="theme-color" content="#00ff88" />
 	<meta property="og:site_name" content="charmanita.dev" />
 </svelte:head>
@@ -35,8 +32,6 @@
 </main>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 	:global(*, *::before, *::after) {
 		margin: 0;
 		padding: 0;

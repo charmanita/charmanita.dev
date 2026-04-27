@@ -100,8 +100,6 @@
 </main>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 	:global(*, *::before, *::after) {
 		margin: 0;
 		padding: 0;
