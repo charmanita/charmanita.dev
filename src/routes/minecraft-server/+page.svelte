@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	let copied = false;
 	let serverOnline = false;
 	let version = '1.21.11';
+	let reason = '';
 
 	function copy(text: string) {
 		navigator.clipboard.writeText(text).then(() => {
@@ -9,7 +11,6 @@
 			setTimeout(() => (copied = false), 2000);
 		});
 	}
-	import { onMount, onDestroy } from 'svelte';
 
 	let playerCount = '0 / 10';
 	let interval: ReturnType<typeof setInterval>;
@@ -25,14 +26,21 @@
 
 	async function fetchStatus() {
 		try {
-			const res = await fetch('https://mcapi.charmanita.dev/public/status');
-			const data = await res.json();
+			const [statusRes, configRes] = await Promise.all([
+				fetch('https://mcapi.charmanita.dev/public/status'),
+				fetch('/server-status.json')
+			]);
+			const data = await statusRes.json();
+			const config: { reason?: string } = await configRes.json();
+
 			playerCount = `${data.current_players} / ${data.max_players}`;
 			serverOnline = data.online;
 			version = data.version;
+			reason = config.reason ?? '';
 		} catch {
 			playerCount = '? / ?';
 			serverOnline = false;
+			reason = `There is a storm coming through my place, so I won't be able to run the server without risking a power outage.\nServer will be back up Wednesday 4/29/2026 at 11AM CDT.`;
 		}
 	}
 </script>
@@ -78,9 +86,12 @@
 			<div class="divider"></div>
 			<div class="row">
 				<span class="label">status</span>
-				<span class="value {serverOnline ? 'online' : 'offline'}"
-					>{serverOnline ? 'online' : 'offline'}</span
-				>
+				<span class="value {serverOnline ? 'online' : 'offline'}">
+					{serverOnline ? 'online' : 'offline'}
+					{#if !serverOnline && reason}
+						<span class="reason">— {reason}</span>
+					{/if}
+				</span>
 			</div>
 			<div class="divider"></div>
 			<div class="row">
@@ -247,6 +258,11 @@
 
 	.offline {
 		color: #ff4444;
+	}
+
+	.reason {
+		color: #555;
+		font-size: 0.7rem;
 	}
 
 	@keyframes fadeIn {
