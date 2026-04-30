@@ -40,7 +40,7 @@
 		} catch {
 			playerCount = '? / ?';
 			serverOnline = false;
-			reason = `There is a storm coming through my place, so I won't be able to run the server without risking a power outage.\nServer will be back up Wednesday 4/29/2026 at 11AM CDT.`;
+			reason = ``;
 		}
 	}
 </script>
