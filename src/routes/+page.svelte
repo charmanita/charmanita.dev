@@ -1,4 +1,5 @@
 <svelte:head>
+	<title>charmanita.dev</title>
 	<meta property="og:title" content="charmanita.dev" />
 	<meta
 		property="og:description"

@@ -24,7 +24,13 @@
 	}
 </script>
 
+<svelte:head>
+	<title>minecraft server admin portal - charmanita.dev</title>
+	<meta property="og:title" content="Minecraft Server Admin Portal - charmanita.dev" />
+	<meta property="og:description" content="Minecraft Server Admin Portal" />
+</svelte:head>
 <main>
+	<a href="/" class="back">← charmanita.dev</a>
 	<h1>Minecraft Server Admin Portal</h1>
 	<input bind:value={username} placeholder="Username" />
 	<input bind:value={password} type="password" placeholder="Password" />
@@ -40,12 +46,12 @@
 		justify-content: center;
 		height: 100vh;
 		gap: 1rem;
-		background: #080b0f;
+		background: #000000;
 		color: white;
 	}
 	input {
 		padding: 0.5rem 1rem;
-		background: #1a1a2e;
+		background: #000000;
 		border: 1px solid #333;
 		color: white;
 		border-radius: 4px;

@@ -1,27 +1,46 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { apiFetch } from '$lib/api';
 	import { goto } from '$app/navigation';
 	import Cookies from 'js-cookie';
 
 	let status = '';
 	let playerList: string[] = [];
-	let logs = '';
 	let command = '';
 	let commandResult = '';
 	let whitelistPlayer = '';
 	let whitelistResult = '';
+	let logLines: string[] = [];
+	let logEl: HTMLPreElement | null = null;
+	let evtSource: EventSource | null = null;
+
 	onMount(async () => {
 		if (!Cookies.get('token')) goto('/minecraft-server/admin');
 		await refreshStatus();
+		startLogStream();
 	});
 
+	function startLogStream() {
+		evtSource?.close();
+		const token = Cookies.get('token');
+		evtSource = new EventSource(`https://mcapi.charmanita.dev/server/logs/stream?token=${token}`);
+		evtSource.onmessage = (e) => {
+			logLines = [...logLines.slice(-500), e.data]; // keeps last 500 lines of console.log();
+			// autoscroll
+			setTimeout(() => logEl?.scrollTo(0, logEl.scrollHeight), 0);
+		};
+		evtSource.onerror = () => {
+			evtSource?.close();
+			// retry after 3s
+			setTimeout(startLogStream, 3000);
+		};
+	}
+
+	// close stream on nav away
+	onDestroy(() => evtSource?.close());
 	async function refreshStatus() {
 		try {
-			const [s, l] = await Promise.all([
-				apiFetch('/server/status').then((r) => r.json()),
-				apiFetch('/server/logs').then((r) => r.json())
-			]);
+			const [s] = await Promise.all([apiFetch('/server/status').then((r) => r.json())]);
 			const p = await apiFetch('/server/players').then((r) => r.json());
 			status = s.status;
 			const match = p.result.match(/online: (.+?)(?:\s*>\s*)?$/);
@@ -32,7 +51,6 @@
 							.map((n: string) => n.trim().replace('>', '').trim())
 							.filter(Boolean)
 					: [];
-			logs = l.logs;
 		} catch (e) {
 			console.error('refreshStatus error:', e);
 			status = 'error';
@@ -83,6 +101,9 @@
 	}
 </script>
 
+<svelte:head>
+	<title>minecraft server admin portal - charmanita.dev</title>
+</svelte:head>
 <main>
 	<header>
 		<h1>Minecraft Server Admin Portal</h1>
@@ -129,7 +150,9 @@
 
 	<section>
 		<h2>Logs</h2>
-		<pre>{logs}</pre>
+		<pre bind:this={logEl} class="log-box">
+			{#each logLines as line}<span>{line}</span>{'\n'}{/each}
+		</pre>
 	</section>
 </main>
 
@@ -138,7 +161,7 @@
 		max-width: 900px;
 		margin: 0 auto;
 		padding: 2rem;
-		background: #080b0f;
+		background: #000;
 		color: white;
 		min-height: 100vh;
 	}
@@ -150,7 +173,7 @@
 	section {
 		margin: 2rem 0;
 		padding: 1rem;
-		background: #1a1a2e;
+		background: #123;
 		border-radius: 8px;
 	}
 	input {
@@ -164,7 +187,7 @@
 	button {
 		padding: 0.5rem 1rem;
 		background: #00ff88;
-		color: #080b0f;
+		color: #000;
 		border: none;
 		border-radius: 4px;
 		cursor: pointer;
@@ -200,5 +223,10 @@
 	}
 	.player img {
 		image-rendering: pixelated;
+	}
+	.log-box {
+		height: 400px;
+		overflow-y: auto;
+		scroll-behavior: auto;
 	}
 </style>

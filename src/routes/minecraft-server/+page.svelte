@@ -46,6 +46,7 @@
 </script>
 
 <svelte:head>
+	<title>minecraft server - charmanita.dev</title>
 	<meta property="og:title" content="minecraft server — charmanita.dev" />
 	<meta property="og:description" content="Join the funservertehe Minecraft server." />
 	<meta property="og:url" content="https://charmanita.dev/minecraft-server" />

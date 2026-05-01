@@ -10,10 +10,15 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
+		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
 		rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
 	/>
 	<link rel="canonical" href="https://charmanita.dev/" />
 </svelte:head>
-
 {@render children()}
+
+<style>
+	:global(body) {
+		font-family: 'IBM Plex Mono', monospace;
+	}
+</style>
