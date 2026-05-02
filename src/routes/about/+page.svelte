@@ -17,6 +17,7 @@
 <svelte:head>
 	<title>about - charmanita.dev</title>
 	<meta property="og:title" content="about — charmanita.dev" />
+	<meta property="og:image" content="https://charmanita.dev/images/og-image.png"
 	<meta name="theme-color" content="#00ff88" />
 </svelte:head>
 
