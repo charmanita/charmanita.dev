@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Who I Am - charmanita.dev</title>
+	<title>about - charmanita.dev</title>
 	<meta property="og:title" content="about — charmanita.dev" />
 	<meta name="theme-color" content="#00ff88" />
 </svelte:head>
