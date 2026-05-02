@@ -71,6 +71,15 @@
 				<span class="contact-icon">⌥</span>
 				<span>github.com/charmanita</span>
 			</a>
+			<a
+				href="https://linkedin.com/in/hunterdroberson"
+				target="_blank"
+				rel="noopener"
+				class="contact-item"
+			>
+				<span class="contact-icon">ⓘ</span>
+				<span>linkedin.com/in/hunterdroberson</span>
+			</a>
 		</div>
 	</div>
 </main>
