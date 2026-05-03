@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { readable } from 'svelte/store';
 	import { apiFetch } from '$lib/api';
 	import { goto } from '$app/navigation';
 	import Cookies from 'js-cookie';
 
 	let status = '';
-	let playerList: string[] = [];
 	let command = '';
 	let commandResult = '';
 	let whitelistPlayer = '';
@@ -13,6 +13,31 @@
 	let logLines: string[] = [];
 	let logEl: HTMLPreElement | null = null;
 	let evtSource: EventSource | null = null;
+
+	function parsePlayers(raw: string): string[] {
+		const match = raw.match(/online: (.+?)(?:\s*>\s*)?$/);
+		return match && match[1].trim()
+			? match[1].split(', ').map((n: string) => n.trim().replace('>', '').trim()).filter(Boolean)
+			: [];
+	}
+
+	const playerList = readable<string[]>([], (set) => {
+		let active = true;
+
+		async function poll() {
+			if (!active) return;
+			try {
+				const p = await apiFetch('/server/players').then((r) => r.json());
+				if (active) set(parsePlayers(p.result));
+			} catch (e) {
+				console.error('player poll error:', e);
+			}
+			if (active) setTimeout(poll, 10_000);
+		}
+
+		poll();
+		return () => { active = false; };
+	});
 
 	onMount(async () => {
 		if (!Cookies.get('token')) goto('/minecraft-server/admin');
@@ -25,32 +50,21 @@
 		const token = Cookies.get('token');
 		evtSource = new EventSource(`https://mcapi.charmanita.dev/server/logs/stream?token=${token}`);
 		evtSource.onmessage = (e) => {
-			logLines = [...logLines.slice(-500), e.data]; // keeps last 500 lines of console.log();
-			// autoscroll
+			logLines = [...logLines.slice(-500), e.data];
 			setTimeout(() => logEl?.scrollTo(0, logEl.scrollHeight), 0);
 		};
 		evtSource.onerror = () => {
 			evtSource?.close();
-			// retry after 3s
 			setTimeout(startLogStream, 3000);
 		};
 	}
 
-	// close stream on nav away
 	onDestroy(() => evtSource?.close());
+
 	async function refreshStatus() {
 		try {
-			const [s] = await Promise.all([apiFetch('/server/status').then((r) => r.json())]);
-			const p = await apiFetch('/server/players').then((r) => r.json());
+			const s = await apiFetch('/server/status').then((r) => r.json());
 			status = s.status;
-			const match = p.result.match(/online: (.+?)(?:\s*>\s*)?$/);
-			playerList =
-				match && match[1].trim()
-					? match[1]
-							.split(', ')
-							.map((n: string) => n.trim().replace('>', '').trim())
-							.filter(Boolean)
-					: [];
 		} catch (e) {
 			console.error('refreshStatus error:', e);
 			status = 'error';
@@ -106,6 +120,7 @@
 </svelte:head>
 <main>
 	<header>
+		<a href="/minecraft-server" class="back">← minecraft server</a>
 		<h1>Minecraft Server Admin Portal</h1>
 		<button on:click={logout}>Logout</button>
 	</header>
@@ -118,12 +133,12 @@
 	</section>
 
 	<section>
-		<h2>Players ({playerList.length})</h2>
-		{#if playerList.length === 0}
+		<h2>Players ({$playerList.length}) <span class="live-dot" title="updates every 10s"></span></h2>
+		{#if $playerList.length === 0}
 			<p>No players online</p>
 		{:else}
 			<div class="players">
-				{#each playerList as player}
+				{#each $playerList as player}
 					<div class="player">
 						<img src={`https://mcapi.charmanita.dev/public/avatar/${player}`} alt={player} />
 						<span>{player}</span>
@@ -223,6 +238,20 @@
 	}
 	.player img {
 		image-rendering: pixelated;
+	}
+	.live-dot {
+		display: inline-block;
+		width: 8px;
+		height: 8px;
+		background: #00ff88;
+		border-radius: 50%;
+		margin-left: 6px;
+		vertical-align: middle;
+		animation: pulse 2s infinite;
+	}
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.3; }
 	}
 	.log-box {
 		height: 400px;
