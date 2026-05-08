@@ -1,3 +1,41 @@
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+
+	let presence: any = null;
+	let ws: WebSocket;
+
+	onMount(() => {
+		ws = new WebSocket('wss://api.lanyard.rest/socket');
+		ws.onmessage = (e) => {
+			const msg = JSON.parse(e.data);
+			if (msg.op === 1) {
+				setInterval(() => ws.send(JSON.stringify({ op: 3 })), msg.d.heartbeat_interval);
+				ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: '485957450009149451' } }));
+			}
+			if (msg.op === 0) presence = msg.d;
+		};
+	});
+
+	onDestroy(() => ws?.close());
+
+	$: activity =
+		presence?.activities?.find((a: any) => a.type === 2) ??
+		presence?.activities?.find((a: any) => a.type === 0);
+	$: status = presence?.discord_status ?? 'offline';
+
+	function getActivityImage(activity: any): string | null {
+		const img = activity.assets?.large_image;
+		if (!img) return null;
+		if (img.startsWith('spotify:')) {
+			return `https://i.scdn.co/image/${img.replace('spotify:', '')}`;
+		}
+		if (img.startsWith('mp:external/')) {
+			return `https://media.discordapp.net/external/${img.replace('mp:external/', '')}`;
+		}
+		return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
+	}
+</script>
+
 <svelte:head>
 	<title>charmanita.dev</title>
 	<meta property="og:title" content="charmanita.dev" />
@@ -19,6 +57,30 @@
 	</video>
 	<div class="center">
 		<p class="name">charmanita.dev</p>
+		{#if presence}
+			<div class="presence-card">
+				<div class="presence-header">
+					<span class="dot {status}"></span>
+					<span class="status-text"
+						>{status === 'dnd'
+							? 'Do Not Disturb'
+							: status.charAt(0).toUpperCase() + status.slice(1)}</span
+					>
+				</div>
+				{#if activity}
+					<div class="presence-body">
+						{#if getActivityImage(activity)}
+							<img class="activity-icon" src={getActivityImage(activity)} alt={activity.name} />
+						{/if}
+						<div class="activity-info">
+							<span class="activity-name">{activity.name}</span>
+							{#if activity.details}<span class="activity-detail">{activity.details}</span>{/if}
+							{#if activity.state}<span class="activity-detail">{activity.state}</span>{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
+		{/if}
 		<a href="/about" class="nav-link">about</a>
 		<a href="/blog" class="nav-link">blog</a>
 		<a href="/minecraft-server" class="nav-link">minecraft server</a>
@@ -84,6 +146,84 @@
 		letter-spacing: 0.04em;
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.1s;
+	}
+	.presence-card {
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.07);
+		border-radius: 10px;
+		padding: 0.75rem 1rem;
+		min-width: 220px;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.2s;
+	}
+
+	.presence-header {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin-bottom: 0.6rem;
+	}
+
+	.dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+
+	.dot.online {
+		background: #00ff88;
+	}
+	.dot.idle {
+		background: #faa61a;
+	}
+	.dot.dnd {
+		background: #f04747;
+	}
+	.dot.offline {
+		background: #747f8d;
+	}
+
+	.status-text {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.7rem;
+		color: #888;
+		letter-spacing: 0.05em;
+	}
+
+	.presence-body {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.activity-icon {
+		width: 52px;
+		height: 52px;
+		border-radius: 6px;
+		flex-shrink: 0;
+		object-fit: cover;
+	}
+
+	.activity-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.activity-name {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: #fff;
+		letter-spacing: 0.03em;
+	}
+
+	.activity-detail {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.65rem;
+		color: #666;
+		letter-spacing: 0.03em;
 	}
 
 	.icons {
