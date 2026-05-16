@@ -21,7 +21,7 @@
 		<p class="name">charmanita.dev</p>
 
 		<a href="/about" class="nav-link">about</a>
-		<a href="/blog" class="nav-link">blog</a>
+		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
 		<a href="/minecraft-server" class="nav-link">minecraft server</a>
 		<div class="icons">
 			<!-- GitHub -->
