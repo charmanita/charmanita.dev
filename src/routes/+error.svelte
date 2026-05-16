@@ -7,9 +7,9 @@
 		<h1 class="text-white">
 			404 page not found... if a page is supposed to be here, and is not showing up, please contact
 			me.
-			<a href="mailto:hdroberson23@gmail.com" class="contact-item">
+			<a href="mailto:contact@charmanita.dev" class="contact-item">
 				<span class="contact-icon">✉</span>
-				<span>hdroberson23@gmail.com</span>
+				<span>contact@charmanita.dev</span>
 			</a>
 		</h1>
 		<img src="/images/stare.png" alt="error" />
