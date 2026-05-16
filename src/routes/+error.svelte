@@ -22,3 +22,14 @@
 		<a href="/">← charmanita.dev</a>
 	</h1>
 </div>
+
+<style>
+	.text-white {
+		color: white;
+		text-align: center;
+	}
+	img {
+		display: block;
+		margin: 0 auto;
+	}
+</style>
