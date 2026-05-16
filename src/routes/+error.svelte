@@ -7,6 +7,10 @@
 		<h1 class="text-white">
 			404 page not found... if a page is supposed to be here, and is not showing up, please contact
 			me.
+			<a href="mailto:hdroberson23@gmail.com" class="contact-item">
+				<span class="contact-icon">✉</span>
+				<span>hdroberson23@gmail.com</span>
+			</a>
 		</h1>
 		<img src="/images/stare.png" alt="error" />
 	{:else}
@@ -14,5 +18,7 @@
 		<p>{$page.error?.message}</p>
 		<img src="/images/stare.png" alt="error" />
 	{/if}
-	<a href="/">charmanita.dev</a>
+	<h1 class="text-white">
+		<a href="/">← charmanita.dev</a>
+	</h1>
 </div>
