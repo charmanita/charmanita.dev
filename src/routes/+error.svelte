@@ -21,6 +21,7 @@
 	<h1 class="text-white">
 		<a href="/">← charmanita.dev</a>
 	</h1>
+	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
 </div>
 
 <style>
@@ -31,5 +32,14 @@
 	img {
 		display: block;
 		margin: 0 auto;
+	}
+	footer {
+		border-top: 1px solid var(--border);
+		padding: 2rem;
+		text-align: center;
+		font-family: var(--mono);
+		font-size: 0.75rem;
+		color: white;
+		letter-spacing: 0.05em;
 	}
 </style>

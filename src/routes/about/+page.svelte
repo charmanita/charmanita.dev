@@ -87,6 +87,7 @@
 			</a>
 		</div>
 	</div>
+	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
 </main>
 
 <style>
@@ -235,6 +236,19 @@
 		font-size: 1rem;
 		width: 1.25rem;
 		text-align: center;
+	}
+	footer {
+		border-top: 1px solid var(--border);
+		padding: 2rem;
+		text-align: center;
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.75rem;
+		color: white;
+		letter-spacing: 0.05em;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
 	}
 	@media (max-width: 600px) {
 		.contact-item {
