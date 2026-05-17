@@ -68,9 +68,9 @@
 	<div class="contact">
 		<div class="section-label" style="margin-top: 4rem;">// contact</div>
 		<div class="contact-links">
-			<a href="mailto:hdroberson23@gmail.com" class="contact-item">
+			<a href="mailto:contact@charmanita.dev" class="contact-item">
 				<span class="contact-icon">✉</span>
-				<span>hdroberson23@gmail.com</span>
+				<span>contact@charmanita.dev</span>
 			</a>
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" class="contact-item">
 				<span class="contact-icon">⌥</span>
