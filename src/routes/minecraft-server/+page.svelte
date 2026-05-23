@@ -3,6 +3,7 @@
 	let copied = false;
 	let serverOnline = false;
 	let version = '1.21.11';
+	let loader = 'fabric 0.17.3';
 	let reason = '';
 
 	function copy(text: string) {
@@ -17,7 +18,7 @@
 
 	onMount(async () => {
 		await fetchStatus();
-		interval = setInterval(fetchStatus, 30000);
+		interval = setInterval(fetchStatus, 10000);
 	});
 
 	onDestroy(() => {
@@ -36,6 +37,7 @@
 			playerCount = `${data.current_players} / ${data.max_players}`;
 			serverOnline = data.online;
 			version = data.version;
+			loader = data.loader ?? 'fabric';
 			reason = config.reason ?? '';
 		} catch {
 			playerCount = '? / ?';
@@ -77,12 +79,12 @@
 			<div class="divider"></div>
 			<div class="row">
 				<span class="label">version</span>
-				<span class="value">1.21.11 (java)</span>
+				<span class="value">{version} (java)</span>
 			</div>
 			<div class="divider"></div>
 			<div class="row">
 				<span class="label">loader</span>
-				<span class="value">fabric 0.17.3</span>
+				<span class="value">{loader}</span>
 			</div>
 			<div class="divider"></div>
 			<div class="row">
