@@ -27,7 +27,7 @@
 	async function fetchStatus() {
 		try {
 			const [statusRes, configRes] = await Promise.all([
-				fetch('https://mcapi.charmanita.dev/public/status'),
+				fetch('/api/status'),
 				fetch('/server-status.json')
 			]);
 			const data = await statusRes.json();
