@@ -24,8 +24,10 @@
 		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
 		<a href="https://charmit.charmanita.dev" class="nav-link">charmIT</a>
 		<a href="/minecraft-server" class="nav-link">minecraft server</a>
+		<a href="/activity" class="nav-link">github activity</a>
+		<a href="/status" class="nav-link">bot status and service status</a>
+
 		<div class="icons">
-			<!-- GitHub -->
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -33,6 +35,7 @@
 					/>
 				</svg>
 			</a>
+
 			<a
 				href="https://linkedin.com/in/hunterdroberson"
 				target="_blank"
@@ -88,6 +91,7 @@
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.1s;
 	}
+
 	.icons {
 		display: flex;
 		gap: 1.75rem;
@@ -126,6 +130,7 @@
 	.nav-link:hover {
 		color: #fff;
 	}
+
 	.bg-gif {
 		position: fixed;
 		top: 50%;
@@ -139,6 +144,7 @@
 		mix-blend-mode: screen;
 		filter: grayscale(1);
 	}
+
 	footer {
 		border-top: 1px solid var(--border);
 		padding: 2rem;
@@ -152,6 +158,7 @@
 		left: 0;
 		width: 100%;
 	}
+
 	@keyframes fadeIn {
 		from {
 			opacity: 0;
