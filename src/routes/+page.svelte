@@ -26,6 +26,7 @@
 		<a href="/minecraft-server" class="nav-link">minecraft server</a>
 		<a href="/activity" class="nav-link">github activity</a>
 		<a href="/status" class="nav-link">bot status and service status</a>
+		<a href="/snake" class="nav-link">click here for a snake game!!!</a>
 
 		<div class="icons">
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
