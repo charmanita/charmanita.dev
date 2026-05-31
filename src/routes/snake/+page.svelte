@@ -91,6 +91,7 @@
 
 <svelte:window on:keydown={handleKey} />
 <div class="flex flex-col items-center justify-center min-h-screen gap-4">
+	<a href="/" class="back">← charmanita.dev</a>
 	<h1 class="text-[#00ff88] font-mono text-2xl">snake</h1>
 	<p class="text-white font-mono">score: {score}</p>
 	<canvas
@@ -104,3 +105,30 @@
 		<p class="text-[#ff4444] font-mono">score: {score}</p>
 	{/if}
 </div>
+<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
+
+<style>
+	.back {
+		font-size: 0.75rem;
+		color: #444;
+		text-decoration: none;
+		letter-spacing: 0.1em;
+		transition: color 0.2s ease;
+	}
+	.back:hover {
+		color: #fff;
+	}
+	footer {
+		border-top: 1px solid var(--border);
+		padding: 2rem;
+		text-align: center;
+		font-family: var(--mono);
+		font-size: 0.75rem;
+		color: white;
+		letter-spacing: 0.05em;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+</style>
