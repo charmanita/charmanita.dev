@@ -374,7 +374,7 @@
 		text-decoration: none;
 		letter-spacing: 0.08em;
 		background: #5865f2;
-		padding: 0.15rem 0.4rem;
+		padding: 0.2rem 0.5rem;
 		line-height: 1;
 		border-radius: 3px;
 		transition: color 0.2s ease;
