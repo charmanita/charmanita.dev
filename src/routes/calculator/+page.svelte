@@ -124,4 +124,7 @@
 	.operator-btn:active {
 		background-color: hsl(35, 100%, 75%);
 	}
+	.center {
+		color: white;
+	}
 </style>
