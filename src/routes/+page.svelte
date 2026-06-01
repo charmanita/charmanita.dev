@@ -27,7 +27,7 @@
 		<a href="/activity" class="nav-link">github activity</a>
 		<a href="/status" class="nav-link">bot status and service status</a>
 		<a href="/snake" class="nav-link">click here for a snake game!!!</a>
-
+		<a href="/calculator" class="nav-link">super cool calculator thing</a>
 		<div class="icons">
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
