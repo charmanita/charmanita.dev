@@ -2,9 +2,11 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	const GRID = 20;
-	const CELL = 20;
+	let cell = 20;
+	let nextDir = { x: 1, y: 0 };
 	const INTERVAL = 150;
-
+	let touchX = 0,
+		touchY = 0;
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D;
 	let interval: ReturnType<typeof setInterval>;
@@ -14,7 +16,32 @@
 	let food = randomFood();
 	let score = 0;
 	let dead = false;
+	function resizeCanvas() {
+		const maxSize = Math.min(window.innerWidth - 32, 400);
+		cell = Math.floor(maxSize / GRID);
+		const size = GRID * cell;
+		canvas.width = size;
+		canvas.height = size;
+		draw();
+	}
 
+	function handleTouchStart(e: TouchEvent) {
+		e.preventDefault();
+		touchX = e.touches[0].clientX;
+		touchY = e.touches[0].clientY;
+	}
+
+	function handleTouchEnd(e: TouchEvent) {
+		e.preventDefault();
+		const dx = e.changedTouches[0].clientX - touchX;
+		const dy = e.changedTouches[0].clientY - touchY;
+		if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+		if (Math.abs(dx) > Math.abs(dy)) setDir(dx > 0 ? 1 : -1, 0);
+		else setDir(0, dy > 0 ? 1 : -1);
+	}
+	function setDir(dx: number, dy: number) {
+		if (dir.x !== -dx || dir.y !== -dy) nextDir = { x: dx, y: dy };
+	}
 	function randomFood() {
 		return {
 			x: Math.floor(Math.random() * GRID),
@@ -31,6 +58,7 @@
 	}
 
 	function tick() {
+		dir = nextDir;
 		const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
 		// wall collision
@@ -58,13 +86,13 @@
 
 	function draw() {
 		ctx.fillStyle = '#080b0f';
-		ctx.fillRect(0, 0, GRID * CELL, GRID * CELL);
+		ctx.fillRect(0, 0, GRID * cell, GRID * cell);
 
 		ctx.fillStyle = '#00ff88';
-		snake.forEach((s) => ctx.fillRect(s.x * CELL, s.y * CELL, CELL - 1, CELL - 1));
+		snake.forEach((s) => ctx.fillRect(s.x * cell, s.y * cell, cell - 1, cell - 1));
 
 		ctx.fillStyle = '#ff4444';
-		ctx.fillRect(food.x * CELL, food.y * CELL, CELL - 1, CELL - 1);
+		ctx.fillRect(food.x * cell, food.y * cell, cell - 1, cell - 1);
 	}
 
 	function handleKey(e: KeyboardEvent) {
@@ -72,42 +100,73 @@
 			reset();
 			return;
 		}
-		if (e.key === 'ArrowUp' && dir.y === 0) dir = { x: 0, y: -1 };
-		if (e.key === 'ArrowDown' && dir.y === 0) dir = { x: 0, y: 1 };
-		if (e.key === 'ArrowLeft' && dir.x === 0) dir = { x: -1, y: 0 };
-		if (e.key === 'ArrowRight' && dir.x === 0) dir = { x: 1, y: 0 };
+		if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			setDir(0, -1);
+		}
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			setDir(0, 1);
+		}
+		if (e.key === 'ArrowLeft') {
+			e.preventDefault();
+			setDir(-1, 0);
+		}
+		if (e.key === 'ArrowRight') {
+			e.preventDefault();
+			setDir(1, 0);
+		}
 	}
 
 	onMount(() => {
 		ctx = canvas.getContext('2d')!;
-		draw();
+		resizeCanvas();
+		window.addEventListener('resize', resizeCanvas);
 		interval = setInterval(() => {
 			if (!dead) tick();
 		}, INTERVAL);
 	});
 
-	onDestroy(() => clearInterval(interval));
+	onDestroy(() => {
+		clearInterval(interval);
+		window.removeEventListener('resize', resizeCanvas);
+	});
 </script>
 
+<div class="banner">📱 swipe to play on mobile</div>
 <svelte:window on:keydown={handleKey} />
 <div class="flex flex-col items-center justify-center min-h-screen gap-4">
 	<a href="/" class="back">← charmanita.dev</a>
 	<h1 class="text-[#00ff88] font-mono text-2xl">snake</h1>
 	<p class="text-white font-mono">score: {score}</p>
 	<canvas
+		style="touch-action: none;"
+		on:touchstart={handleTouchStart}
+		on:touchend={handleTouchEnd}
 		bind:this={canvas}
-		width={GRID * CELL}
-		height={GRID * CELL}
+		width={GRID * cell}
+		height={GRID * cell}
 		class="border border-[#00ff88]"
 	/>
 	{#if dead}
-		<p class="text-[#ff4444] font-mono">game over - you suck (press enter to restart)</p>
+		<p class="text-[#ff4444] font-mono cursor-pointer" on:click={reset}>
+			game over - press enter to restart, if you're on mobile, tap this text box.
+		</p>
 		<p class="text-[#ff4444] font-mono">score: {score}</p>
 	{/if}
 </div>
 <footer>© 2026 Hunter Roberson · charmanita.dev</footer>
 
 <style>
+	.banner {
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		color: #00ff88;
+		border: 1px solid #00ff8844;
+		padding: 4px 12px;
+		border-radius: 4px;
+		letter-spacing: 0.05em;
+	}
 	.back {
 		font-size: 0.75rem;
 		color: #444;
@@ -126,9 +185,5 @@
 		font-size: 0.75rem;
 		color: white;
 		letter-spacing: 0.05em;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
 	}
 </style>
