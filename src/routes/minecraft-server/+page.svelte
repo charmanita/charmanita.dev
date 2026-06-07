@@ -5,7 +5,7 @@
 	let version = '1.21.11';
 	let loader = 'fabric 0.17.3';
 	let reason = '';
-	let bots = [];
+	let bots: string | any[] | null | undefined = [];
 
 	function copy(text: string) {
 		navigator.clipboard.writeText(text).then(() => {
@@ -22,10 +22,10 @@
 		interval = setInterval(fetchStatus, 10000);
 		const res = await fetch('https://mcapi.charmanita.dev/public/bots');
 		const all = await res.json();
-		bots = all.filter((b) => b.name === 'githubchecker');
+		bots = all.filter((b: { name: string }) => b.name === 'githubchecker');
 	});
 
-	function statusColor(status) {
+	function statusColor(status: string) {
 		return status === 'online' ? '#00ff88' : '#ff4444';
 	}
 
@@ -78,10 +78,10 @@
 						<span class="label">ip</span>
 						<button
 							class="value copyable"
-							on:click={() => copy('funservertehe.charmanita.dev')}
+							on:click={() => copy('mc.charmanita.dev')}
 							title="click to copy"
 						>
-							funservertehe.charmanita.dev
+							mc.charmanita.dev
 							{#if copied}
 								<span class="copied-tag">copied!</span>
 							{/if}
