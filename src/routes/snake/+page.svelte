@@ -139,6 +139,7 @@
 	<a href="/" class="back">← charmanita.dev</a>
 	<h1 class="text-[#00ff88] font-mono text-2xl">snake</h1>
 	<p class="text-white font-mono">score: {score}</p>
+	<!-- svelte-ignore element_invalid_self_closing_tag -->
 	<canvas
 		style="touch-action: none;"
 		on:touchstart={handleTouchStart}
@@ -149,6 +150,8 @@
 		class="border border-[#00ff88]"
 	/>
 	{#if dead}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<p class="text-[#ff4444] font-mono cursor-pointer" on:click={reset}>
 			game over - press enter to restart, if you're on mobile, tap this text box.
 		</p>
