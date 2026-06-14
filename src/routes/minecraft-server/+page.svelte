@@ -20,7 +20,7 @@
 	onMount(async () => {
 		await fetchStatus();
 		interval = setInterval(fetchStatus, 10000);
-		const res = await fetch('https://mcapi.charmanita.dev/public/bots');
+		const res = await fetch('https://api.charmanita.dev/public/bots');
 		const all = await res.json();
 		bots = all.filter((b: { name: string }) => b.name === 'githubchecker');
 	});

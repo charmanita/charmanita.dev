@@ -17,7 +17,10 @@
 	function parsePlayers(raw: string): string[] {
 		const match = raw.match(/online: (.+?)(?:\s*>\s*)?$/);
 		return match && match[1].trim()
-			? match[1].split(', ').map((n: string) => n.trim().replace('>', '').trim()).filter(Boolean)
+			? match[1]
+					.split(', ')
+					.map((n: string) => n.trim().replace('>', '').trim())
+					.filter(Boolean)
 			: [];
 	}
 
@@ -36,7 +39,9 @@
 		}
 
 		poll();
-		return () => { active = false; };
+		return () => {
+			active = false;
+		};
 	});
 
 	onMount(async () => {
@@ -48,7 +53,7 @@
 	function startLogStream() {
 		evtSource?.close();
 		const token = Cookies.get('token');
-		evtSource = new EventSource(`https://mcapi.charmanita.dev/server/logs/stream?token=${token}`);
+		evtSource = new EventSource(`https://api.charmanita.dev/server/logs/stream?token=${token}`);
 		evtSource.onmessage = (e) => {
 			logLines = [...logLines.slice(-500), e.data];
 			setTimeout(() => logEl?.scrollTo(0, logEl.scrollHeight), 0);
@@ -140,7 +145,7 @@
 			<div class="players">
 				{#each $playerList as player}
 					<div class="player">
-						<img src={`https://mcapi.charmanita.dev/public/avatar/${player}`} alt={player} />
+						<img src={`https://api.charmanita.dev/public/avatar/${player}`} alt={player} />
 						<span>{player}</span>
 					</div>
 				{/each}
@@ -250,8 +255,13 @@
 		animation: pulse 2s infinite;
 	}
 	@keyframes pulse {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0.3; }
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.3;
+		}
 	}
 	.log-box {
 		height: 400px;

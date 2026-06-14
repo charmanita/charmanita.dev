@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-export const API = 'https://mcapi.charmanita.dev';
+export const API = 'https://api.charmanita.dev';
 
 export function getToken() {
     return Cookies.get('token');
