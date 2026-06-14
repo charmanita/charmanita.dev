@@ -118,8 +118,10 @@
 						<span class="value">off</span>
 					</div>
 				</div>
-				<p class="note">click the ip to copy it to your clipboard</p>
-				<a href="/minecraft-server/admin" class="admin-link">admin portal</a>
+				<p class="note">Click the IP to copy it to your clipboard</p>
+				<p class="link">Links:</p>
+				<a href="/minecraft-server/admin" class="admin-link">Admin Portal</a>
+				<a href="https://map.charmanita.dev" class="map-link">Map</a>
 			</div>
 
 			<div class="grid-col">
@@ -292,7 +294,16 @@
 		color: #555;
 		letter-spacing: 0.08em;
 	}
-
+	.link {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.7rem;
+		color: #333;
+		text-decoration: none;
+		letter-spacing: 0.1em;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.6s;
+		text-align: center;
+	}
 	.note {
 		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.65rem;
@@ -310,9 +321,24 @@
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.6s;
 		transition: color 0.2s ease;
+		text-align: center;
 	}
 
 	.admin-link:hover {
+		color: #fff;
+	}
+	.map-link {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.7rem;
+		color: #333;
+		text-decoration: none;
+		letter-spacing: 0.1em;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.6s;
+		transition: color 0.2s ease;
+		text-align: center;
+	}
+	.map-link:hover {
 		color: #fff;
 	}
 	.online {
