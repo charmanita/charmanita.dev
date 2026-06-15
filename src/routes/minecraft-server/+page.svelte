@@ -6,6 +6,7 @@
 	let loader = 'fabric 0.17.3';
 	let reason = '';
 	let bots: string | any[] | null | undefined = [];
+	let mapOnline = false;
 
 	function copy(text: string) {
 		navigator.clipboard.writeText(text).then(() => {
@@ -51,6 +52,13 @@
 			playerCount = '? / ?';
 			serverOnline = false;
 			reason = ``;
+		}
+		// BlueMap Check
+		try {
+			const mapRes = await fetch('https://map.charmanita.dev/', { cache: 'no-store ' });
+			mapOnline = mapRes.ok;
+		} catch {
+			mapOnline = false;
 		}
 	}
 </script>
@@ -121,7 +129,9 @@
 				<p class="note">Click the IP to copy it to your clipboard</p>
 				<p class="link">Links:</p>
 				<a href="/minecraft-server/admin" class="admin-link">Admin Portal</a>
-				<a href="https://map.charmanita.dev" class="map-link">Map</a>
+				<a href="https://map.charmanita.dev" class="map-link"
+					><span class="dot" style="background: {mapOnline ? '#00ff88' : '#ff4444'}"></span>Map</a
+				>
 			</div>
 
 			<div class="grid-col">
@@ -328,6 +338,9 @@
 		color: #fff;
 	}
 	.map-link {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
 		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.7rem;
 		color: #333;
@@ -337,6 +350,7 @@
 		animation: fadeIn 0.8s ease forwards 0.6s;
 		transition: color 0.2s ease;
 		text-align: center;
+		align-self: center;
 	}
 	.map-link:hover {
 		color: #fff;
