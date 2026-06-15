@@ -55,7 +55,7 @@
 		}
 		// BlueMap Check
 		try {
-			const mapRes = await fetch('https://map.charmanita.dev/', { cache: 'no-store ' });
+			const mapRes = await fetch('/api/map-status', { cache: 'no-store' });
 			mapOnline = mapRes.ok;
 		} catch {
 			mapOnline = false;
