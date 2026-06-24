@@ -138,7 +138,14 @@
 	}
 
 	h1 {
-		font-family: 'Syne', sans-serif;
+		font-family: 'IBM Plex Mono', monospace;
+		font-weight: 800;
+		font-size: clamp(2rem, 5vw, 3rem);
+		letter-spacing: -0.02em;
+		margin-bottom: 2.5rem;
+	}
+	p {
+		font-family: 'IBM Plex Mono', monospace;
 		font-weight: 800;
 		font-size: clamp(2rem, 5vw, 3rem);
 		letter-spacing: -0.02em;
@@ -181,6 +188,7 @@
 	}
 
 	.stat-label {
+		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.75rem;
 		color: #3d5a6a;
 		letter-spacing: 0.08em;

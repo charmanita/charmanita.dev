@@ -169,6 +169,7 @@
 		padding: 4px 12px;
 		border-radius: 4px;
 		letter-spacing: 0.05em;
+		text-align: center;
 	}
 	.back {
 		font-size: 0.75rem;
