@@ -19,7 +19,7 @@
 	<meta property="og:title" content="about — charmanita.dev" />
 	<meta
 		property="og:description"
-		content="Heyo! My name is Hunter, I am from the North Texas ara. I am currently going to Grayson College... see more"
+		content="Heyo! My name is Hunter, I am from the North Texas area. I am currently going to Grayson College... see more"
 	/>
 	<meta property="og:image" content="https://charmanita.dev/images/og-image.png" />
 	<meta name="theme-color" content="#00ff88" />
