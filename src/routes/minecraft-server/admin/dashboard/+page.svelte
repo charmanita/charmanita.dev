@@ -4,6 +4,7 @@
 	import { apiFetch } from '$lib/api';
 	import { goto } from '$app/navigation';
 	import Cookies from 'js-cookie';
+	import { browser } from '$app/environment';
 
 	let status = '';
 	let command = '';
@@ -114,6 +115,18 @@
 		whitelistResult = data.result;
 	}
 
+	const username = browser
+		? (() => {
+				const token = Cookies.get('token');
+				if (!token) return null;
+				try {
+					return JSON.parse(atob(token.split('.')[1])).sub;
+				} catch {
+					return null;
+				}
+			})()
+		: null;
+
 	function logout() {
 		Cookies.remove('token');
 		goto('/minecraft-server/admin');
@@ -127,6 +140,9 @@
 	<header>
 		<a href="/minecraft-server" class="back">← minecraft server</a>
 		<h1>Minecraft Server Admin Portal</h1>
+		{#if username}
+			<span class="username">logged in as <strong>{username}</strong></span>
+		{/if}
 		<button on:click={logout}>Logout</button>
 	</header>
 
@@ -262,6 +278,10 @@
 		50% {
 			opacity: 0.3;
 		}
+	}
+	.username {
+		font-size: 0.85rem;
+		color: #aaa;
 	}
 	.log-box {
 		height: 400px;

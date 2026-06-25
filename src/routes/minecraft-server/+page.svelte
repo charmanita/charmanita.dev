@@ -146,15 +146,19 @@
 									{:else}
 										<div class="avatar-placeholder"></div>
 									{/if}
-									<span class="label">{bot.display_name}</span>
-									{#if bot.invite}
-										<a href={bot.invite} target="_blank" rel="noopener" class="invite">+ add</a>
-									{/if}
+									<div class="bot-details">
+										<span class="label">{bot.display_name}</span>
+										<div class="bot-status">
+											<span class="dot" style="background: {statusColor(bot.status)}"></span>
+											<span class="value" style="color: {statusColor(bot.status)}"
+												>{bot.status}</span
+											>
+										</div>
+									</div>
 								</div>
-								<div class="bot-status">
-									<span class="dot" style="background: {statusColor(bot.status)}"></span>
-									<span class="value" style="color: {statusColor(bot.status)}">{bot.status}</span>
-								</div>
+								{#if bot.invite}
+									<a href={bot.invite} target="_blank" rel="noopener" class="invite">+ add</a>
+								{/if}
 							</div>
 						{/each}
 					</div>
@@ -379,8 +383,14 @@
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
+		min-width: 0;
+		flex: 1;
 	}
-
+	.bot-details {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
 	.bot-status {
 		display: flex;
 		align-items: center;
