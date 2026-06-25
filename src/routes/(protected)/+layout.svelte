@@ -6,7 +6,7 @@
 
 	onMount(() => {
 		if (!dev && !Cookies.get('gate_token')) {
-			goto('/gate');
+			goto(`/gate?redirect=${encodeURIComponent(window.location.pathname)}`);
 		}
 	});
 </script>

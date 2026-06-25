@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Cookies from 'js-cookie';
+	import { page } from '$app/stores';
 
+	$: redirect = $page.url.searchParams.get('redirect') || '/';
 	let password = '';
 	let error = '';
 	let loading = false;
@@ -21,7 +23,7 @@
 			}
 			const data = await res.json();
 			Cookies.set('gate_token', data.token, { expires: 7 });
-			goto('/');
+			goto(redirect);
 		} catch {
 			error = 'Something went wrong.';
 		} finally {
