@@ -23,7 +23,7 @@
 		interval = setInterval(fetchStatus, 10000);
 		const res = await fetch('https://api.charmanita.dev/public/bots');
 		const all = await res.json();
-		bots = all.filter((b: { name: string }) => b.name === 'githubchecker');
+		bots = all.filter((b: { name: string }) => b.name === 'mcserverbot');
 	});
 
 	function statusColor(status: string) {
