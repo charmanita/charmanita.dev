@@ -19,19 +19,9 @@
 	</video>
 	<div class="center">
 		<p class="name"><a href="/">charmanita.dev</a></p>
-		<div class="banner">⚠️ WORKING ON A NEW LAYOUT ⚠️</div>
-		<p class="subtitle">
-			↓ this layout will be archived <a href="/archive/1">@ charmanita.dev/archive/1</a>
-			↓
-		</p>
-		<a href="/about" class="nav-link">about</a>
-		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
-		<a href="https://charmit.charmanita.dev" class="nav-link">charmIT</a>
-		<a href="/minecraft-server" class="nav-link">minecraft server</a>
-		<a href="/activity" class="nav-link">github activity</a>
-		<a href="/status" class="nav-link">bot status and service status</a>
-		<a href="/snake" class="nav-link">click here for a snake game!!!</a>
-		<a href="/calculator" class="nav-link">super cool calculator thing</a>
+		<div class="banner">⚠️ WIP ⚠️</div>
+		<p class="subtitle">currently working on a new site layout</p>
+		<a href="/archive/1" class="nav-link">old site</a>
 		<div class="icons">
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +78,7 @@
 	}
 	.banner {
 		font-family: var(--mono);
-		font-size: 0.7rem;
+		font-size: 1.7rem;
 		color: #00ff88;
 		border: 1px solid #00ff8844;
 		padding: 4px 12px;
@@ -148,7 +138,7 @@
 
 	.nav-link {
 		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.75rem;
+		font-size: 1.75rem;
 		color: #444;
 		text-decoration: none;
 		letter-spacing: 0.1em;

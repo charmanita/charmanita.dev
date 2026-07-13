@@ -19,7 +19,6 @@
 	</video>
 	<div class="center">
 		<p class="name">charmanita.dev</p>
-
 		<a href="/about" class="nav-link">about</a>
 		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
 		<a href="https://charmit.charmanita.dev" class="nav-link">charmIT</a>
@@ -97,7 +96,7 @@
 		color: #fff;
 		letter-spacing: 0.04em;
 		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.1s;
+		animation: fadeIn 0.8s ease forwards 0.35s;
 	}
 
 	.icons {
@@ -131,7 +130,7 @@
 		text-decoration: none;
 		letter-spacing: 0.1em;
 		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.55s;
+		animation: fadeIn 0.8s ease forwards 0.35s;
 		transition: color 0.2s ease;
 	}
 
