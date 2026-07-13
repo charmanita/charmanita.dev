@@ -18,12 +18,8 @@
 		<source src="/mii.gif" type="image/gif" />
 	</video>
 	<div class="center">
-		<p class="name"><a href="/">charmanita.dev</a></p>
-		<div class="banner">⚠️ WORKING ON A NEW LAYOUT ⚠️</div>
-		<p class="subtitle">
-			↓ this layout will be archived <a href="/archive/1">@ charmanita.dev/archive/1</a>
-			↓
-		</p>
+		<p class="name">charmanita.dev</p>
+
 		<a href="/about" class="nav-link">about</a>
 		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
 		<a href="https://charmit.charmanita.dev" class="nav-link">charmIT</a>
@@ -86,17 +82,6 @@
 		justify-content: center;
 		overflow: hidden;
 	}
-	.banner {
-		font-family: var(--mono);
-		font-size: 0.7rem;
-		color: #00ff88;
-		border: 1px solid #00ff8844;
-		padding: 4px 12px;
-		border-radius: 4px;
-		letter-spacing: 0.05em;
-		text-align: center;
-		animation: fadeIn 0.8s ease forwards 0.1s;
-	}
 
 	.center {
 		display: flex;
@@ -112,14 +97,7 @@
 		color: #fff;
 		letter-spacing: 0.04em;
 		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
-	}
-	.subtitle {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: clamp(1.1rem, 1vw, 1.6rem);
-		font-weight: 400;
-		color: #fff;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		animation: fadeIn 0.8s ease forwards 0.1s;
 	}
 
 	.icons {
@@ -153,7 +131,7 @@
 		text-decoration: none;
 		letter-spacing: 0.1em;
 		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		animation: fadeIn 0.8s ease forwards 0.55s;
 		transition: color 0.2s ease;
 	}
 
