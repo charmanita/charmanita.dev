@@ -8,20 +8,39 @@
 	<meta property="og:url" content="https://charmanita.dev/" />
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="https://charmanita.dev/images/og-image.png" />
-	<meta name="theme-color" content="#00ff88" />
+	<meta name="theme-color" content="#2fb8c9" />
 	<meta property="og:site_name" content="charmanita.dev" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Quicksand:wght@400;500;600&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
 
 <main>
-	<video class="bg-gif" autoplay loop muted playsinline aria-hidden="true">
-		<source src="/mii.webm" type="video/webm" />
-		<source src="/mii.gif" type="image/gif" />
-	</video>
-	<div class="center">
-		<p class="name"><a href="/">charmanita.dev</a></p>
-		<div class="banner">⚠️ WIP ⚠️</div>
-		<p class="subtitle">currently working on a new site layout</p>
-		<a href="/archive/1" class="nav-link">old site</a>
+	<div class="sky"></div>
+	<div class="bubbles" aria-hidden="true">
+		{#each Array(14) as _, i}
+			<span class="bubble b{i}"></span>
+		{/each}
+	</div>
+
+	<div class="dock">
+		<img class="mii-sitter" src="/images/mii-sitting.png" alt="" aria-hidden="true" />
+		<p class="name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
+
+		<nav class="pills">
+			<a href="/about" class="pill">about</a>
+			<a href="https://blog.charmanita.dev" class="pill">blog</a>
+			<a href="https://charmit.charmanita.dev" class="pill">charmIT</a>
+			<a href="/minecraft-server" class="pill">minecraft server</a>
+			<a href="/activity" class="pill">github activity</a>
+			<a href="/status" class="pill">bot &amp; service status</a>
+			<a href="/snake" class="pill">snake game</a>
+			<a href="/calculator" class="pill">calculator thing</a>
+		</nav>
+
 		<div class="icons">
 			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +49,6 @@
 					/>
 				</svg>
 			</a>
-
 			<a
 				href="https://linkedin.com/in/hunterdroberson"
 				target="_blank"
@@ -51,8 +69,14 @@
 				</svg>
 			</a>
 		</div>
+
+		<p class="subtitle">old site layouts live in the archive ↓</p>
+		<a href="/archive" class="pill pill-ghost">archive</a>
 	</div>
-	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
+
+	<footer>
+		<div class="footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
+	</footer>
 </main>
 
 <style>
@@ -65,128 +89,353 @@
 	:global(html, body) {
 		width: 100%;
 		height: 100%;
-		background: #000;
 	}
 
 	main {
+		position: relative;
 		width: 100%;
 		height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
-	}
-	.banner {
-		font-family: var(--mono);
-		font-size: 1.7rem;
-		color: #00ff88;
-		border: 1px solid #00ff8844;
-		padding: 4px 12px;
-		border-radius: 4px;
-		letter-spacing: 0.05em;
-		text-align: center;
-		animation: fadeIn 0.8s ease forwards 0.1s;
+		font-family: 'Quicksand', sans-serif;
 	}
 
-	.center {
+	.sky {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, #bfe8ff 0%, #d9f6ee 55%, #eafff0 100%);
+		z-index: 0;
+	}
+
+	.sky::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(ellipse 55% 30% at 18% 12%, rgba(255, 255, 255, 0.85), transparent 70%),
+			radial-gradient(ellipse 40% 22% at 78% 20%, rgba(255, 255, 255, 0.7), transparent 70%),
+			radial-gradient(ellipse 60% 35% at 50% 100%, rgba(140, 224, 200, 0.35), transparent 70%);
+	}
+
+	.bubbles {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.bubble {
+		position: absolute;
+		bottom: -10%;
+		border-radius: 50%;
+		background:
+			radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.05) 40%),
+			radial-gradient(circle at 65% 70%, rgba(120, 220, 210, 0.25), rgba(120, 220, 210, 0) 60%);
+		border: 1px solid rgba(255, 255, 255, 0.6);
+		box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.5);
+		animation: rise linear infinite;
+		opacity: 0.7;
+	}
+
+	.b0 {
+		left: 4%;
+		width: 18px;
+		height: 18px;
+		animation-duration: 14s;
+		animation-delay: 0s;
+	}
+	.b1 {
+		left: 12%;
+		width: 34px;
+		height: 34px;
+		animation-duration: 19s;
+		animation-delay: 2s;
+	}
+	.b2 {
+		left: 20%;
+		width: 12px;
+		height: 12px;
+		animation-duration: 11s;
+		animation-delay: 1s;
+	}
+	.b3 {
+		left: 30%;
+		width: 26px;
+		height: 26px;
+		animation-duration: 17s;
+		animation-delay: 4s;
+	}
+	.b4 {
+		left: 40%;
+		width: 16px;
+		height: 16px;
+		animation-duration: 13s;
+		animation-delay: 3s;
+	}
+	.b5 {
+		left: 50%;
+		width: 40px;
+		height: 40px;
+		animation-duration: 22s;
+		animation-delay: 0.5s;
+	}
+	.b6 {
+		left: 58%;
+		width: 14px;
+		height: 14px;
+		animation-duration: 12s;
+		animation-delay: 5s;
+	}
+	.b7 {
+		left: 66%;
+		width: 28px;
+		height: 28px;
+		animation-duration: 18s;
+		animation-delay: 2.5s;
+	}
+	.b8 {
+		left: 74%;
+		width: 20px;
+		height: 20px;
+		animation-duration: 15s;
+		animation-delay: 6s;
+	}
+	.b9 {
+		left: 82%;
+		width: 32px;
+		height: 32px;
+		animation-duration: 20s;
+		animation-delay: 1.5s;
+	}
+	.b10 {
+		left: 90%;
+		width: 15px;
+		height: 15px;
+		animation-duration: 13.5s;
+		animation-delay: 3.5s;
+	}
+	.b11 {
+		left: 8%;
+		width: 24px;
+		height: 24px;
+		animation-duration: 16s;
+		animation-delay: 7s;
+	}
+	.b12 {
+		left: 46%;
+		width: 10px;
+		height: 10px;
+		animation-duration: 10s;
+		animation-delay: 8s;
+	}
+	.b13 {
+		left: 96%;
+		width: 22px;
+		height: 22px;
+		animation-duration: 17.5s;
+		animation-delay: 4.5s;
+	}
+
+	@keyframes rise {
+		from {
+			transform: translateY(0) translateX(0);
+		}
+		50% {
+			transform: translateY(-55vh) translateX(12px);
+		}
+		to {
+			transform: translateY(-115vh) translateX(-8px);
+		}
+	}
+
+	.bg-gif {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: min(380px, 70vw);
+		height: auto;
+		opacity: 0.14;
+		pointer-events: none;
+		user-select: none;
+		mix-blend-mode: multiply;
+		z-index: 1;
+	}
+
+	.dock {
+		position: relative;
+		z-index: 2;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 1.75rem;
+		gap: 1.25rem;
+		padding: 2.5rem clamp(1.5rem, 6vw, 3.5rem);
+		border-radius: 28px;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.22));
+		border: 1px solid rgba(255, 255, 255, 0.75);
+		box-shadow:
+			0 8px 32px rgba(20, 90, 110, 0.18),
+			inset 0 1px 0 rgba(255, 255, 255, 0.9),
+			inset 0 -12px 24px rgba(255, 255, 255, 0.15);
+		backdrop-filter: blur(14px);
+		max-width: min(92vw, 560px);
+	}
+
+	.mii-sitter {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -88%);
+		width: clamp(250px, 40vw, 250px);
+		height: auto;
+		pointer-events: none;
+		user-select: none;
+		filter: drop-shadow(0 8px 10px rgba(20, 90, 110, 0.25));
 	}
 
 	.name {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: clamp(1.1rem, 4vw, 1.6rem);
-		font-weight: 400;
-		color: #fff;
-		letter-spacing: 0.04em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		font-family: 'Baloo 2', sans-serif;
+		font-weight: 700;
+		font-size: clamp(1.6rem, 5vw, 2.4rem);
+		letter-spacing: 0.01em;
+		background: linear-gradient(180deg, #1fb6c9 0%, #0d6d80 55%, #073744 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 	}
-	.subtitle {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: clamp(1.1rem, 1vw, 1.6rem);
-		font-weight: 400;
-		color: #fff;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+
+	.name a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.dot {
+		color: #00ff88;
+		-webkit-text-fill-color: #00ff88;
+	}
+
+	.pills {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem;
+		max-width: 460px;
+	}
+
+	.pill {
+		position: relative;
+		overflow: hidden;
+		font-size: 0.78rem;
+		font-weight: 500;
+		color: #0d4a5c;
+		text-decoration: none;
+		padding: 0.5rem 1.1rem;
+		border-radius: 999px;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(200, 240, 235, 0.55));
+		border: 1px solid rgba(255, 255, 255, 0.85);
+		box-shadow:
+			0 2px 6px rgba(20, 90, 110, 0.12),
+			inset 0 1px 0 rgba(255, 255, 255, 0.9);
+		transition:
+			transform 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.pill::after {
+		content: '';
+		position: absolute;
+		top: -60%;
+		left: -30%;
+		width: 40%;
+		height: 220%;
+		background: rgba(255, 255, 255, 0.55);
+		transform: rotate(20deg);
+		transition: left 0.5s ease;
+	}
+
+	.pill:hover {
+		transform: translateY(-2px);
+		box-shadow:
+			0 6px 14px rgba(20, 90, 110, 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.9);
+		color: #073744;
+	}
+
+	.pill:hover::after {
+		left: 130%;
+	}
+
+	.pill-ghost {
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(180, 230, 220, 0.2));
 	}
 
 	.icons {
 		display: flex;
-		gap: 1.75rem;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		gap: 1.4rem;
 	}
 
 	.icons a {
-		color: #555;
+		width: 34px;
+		height: 34px;
+		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: color 0.2s ease;
+		color: #0d4a5c;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(200, 240, 235, 0.4));
+		border: 1px solid rgba(255, 255, 255, 0.8);
+		box-shadow:
+			0 2px 6px rgba(20, 90, 110, 0.12),
+			inset 0 1px 0 rgba(255, 255, 255, 0.9);
+		transition:
+			transform 0.18s ease,
+			color 0.18s ease;
 	}
 
 	.icons a:hover {
-		color: #fff;
+		transform: translateY(-2px) scale(1.06);
+		color: #1fb6c9;
 	}
 
 	.icons svg {
-		width: 20px;
-		height: 20px;
+		width: 17px;
+		height: 17px;
 	}
 
-	.nav-link {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 1.75rem;
-		color: #444;
-		text-decoration: none;
-		letter-spacing: 0.1em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
-		transition: color 0.2s ease;
-	}
-
-	.nav-link:hover {
-		color: #fff;
-	}
-
-	.bg-gif {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: min(420px, 80vw);
-		height: auto;
-		opacity: 0.08;
-		pointer-events: none;
-		user-select: none;
-		mix-blend-mode: screen;
-		filter: grayscale(1);
+	.subtitle {
+		font-size: 0.7rem;
+		color: #1c5e6e;
+		opacity: 0.85;
 	}
 
 	footer {
-		border-top: 1px solid var(--border);
-		padding: 2rem;
-		text-align: center;
-		font-family: var(--mono);
-		font-size: 0.75rem;
-		color: white;
-		letter-spacing: 0.05em;
 		position: absolute;
-		bottom: 0;
+		bottom: 1.25rem;
 		left: 0;
 		width: 100%;
+		display: flex;
+		justify-content: center;
+		z-index: 2;
 	}
 
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(6px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
+	.footer-glass {
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
+		color: #0d4a5c;
+		padding: 0.5rem 1.4rem;
+		border-radius: 999px;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(200, 240, 235, 0.3));
+		border: 1px solid rgba(255, 255, 255, 0.7);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bubble {
+			animation: none;
+			opacity: 0.3;
 		}
 	}
 </style>
