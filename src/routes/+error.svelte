@@ -4,7 +4,7 @@
 
 <div>
 	{#if $page.status === 404}
-		<h1 class="text-white">
+		<h1 class="text-black">
 			404 page not found... if a page is supposed to be here, and is not showing up, please contact
 			me.
 			<a href="mailto:contact@charmanita.dev" class="contact-item">
@@ -14,19 +14,19 @@
 		</h1>
 		<img src="/images/stare.png" alt="error" />
 	{:else}
-		<h1 class="text-white">{$page.status}</h1>
+		<h1 class="text-black">{$page.status}</h1>
 		<p>{$page.error?.message}</p>
 		<img src="/images/stare.png" alt="error" />
 	{/if}
-	<h1 class="text-white">
+	<h1 class="text-black">
 		<a href="/">← charmanita.dev</a>
 	</h1>
 	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
 </div>
 
 <style>
-	.text-white {
-		color: white;
+	.text-black {
+		color: black;
 		text-align: center;
 	}
 	img {

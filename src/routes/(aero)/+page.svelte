@@ -1,3 +1,9 @@
+<script lang="ts">
+	import GlassPanel from '$lib/components/GlassPanel.svelte';
+	import Pill from '$lib/components/Pill.svelte';
+	import MiiSitter from '$lib/components/MiiSitter.svelte';
+</script>
+
 <svelte:head>
 	<title>charmanita.dev</title>
 	<meta property="og:title" content="charmanita.dev" />
@@ -8,35 +14,43 @@
 	<meta property="og:url" content="https://charmanita.dev/" />
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="https://charmanita.dev/images/og-image.png" />
-	<meta name="theme-color" content="#00ff88" />
+	<meta name="theme-color" content="#2fb8c9" />
 	<meta property="og:site_name" content="charmanita.dev" />
 </svelte:head>
 
 <main>
-	<video class="bg-gif" autoplay loop muted playsinline aria-hidden="true">
-		<source src="/mii.webm" type="video/webm" />
-		<source src="/mii.gif" type="image/gif" />
-	</video>
-	<div class="center">
-		<p class="name">charmanita.dev</p>
-		<a href="/archive/1/about" class="nav-link">about</a>
-		<a href="https://blog.charmanita.dev" class="nav-link">blog</a>
-		<a href="https://charmit.charmanita.dev" class="nav-link">charmIT</a>
-		<a href="/archive/1/minecraft-server" class="nav-link">minecraft server</a>
-		<a href="/archive/1/activity" class="nav-link">github activity</a>
-		<a href="/archive/1/status" class="nav-link">bot status and service status</a>
-		<a href="/archive/1/snake" class="nav-link">click here for a snake game!!!</a>
-		<a href="/archive/1/calculator" class="nav-link">super cool calculator thing</a>
+	<GlassPanel>
+		<MiiSitter pose="sitting" size="clamp(250px, 40vw, 250px)" lift={90} />
+
+		<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
+
+		<nav class="pills">
+			<Pill href="/about">about</Pill>
+			<Pill href="https://blog.charmanita.dev">blog</Pill>
+			<Pill href="https://charmit.charmanita.dev">charmIT</Pill>
+			<Pill href="/minecraft-server">minecraft server</Pill>
+			<Pill href="/activity">github activity</Pill>
+			<Pill href="/status">bot &amp; service status</Pill>
+			<Pill href="/snake">snake game</Pill>
+			<Pill href="/calculator">calculator thing</Pill>
+		</nav>
+
 		<div class="icons">
-			<a href="https://github.com/charmanita" target="_blank" rel="noopener" aria-label="GitHub">
+			<a
+				class="aero-icon-btn"
+				href="https://github.com/charmanita"
+				target="_blank"
+				rel="noopener"
+				aria-label="GitHub"
+			>
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 					<path
 						d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"
 					/>
 				</svg>
 			</a>
-
 			<a
+				class="aero-icon-btn"
 				href="https://linkedin.com/in/hunterdroberson"
 				target="_blank"
 				rel="noopener"
@@ -48,7 +62,7 @@
 					/>
 				</svg>
 			</a>
-			<a href="/discord" target="_blank" rel="noopener" aria-label="Discord">
+			<a class="aero-icon-btn" href="/discord" target="_blank" rel="noopener" aria-label="Discord">
 				<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
 					><path
 						d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
@@ -56,124 +70,72 @@
 				</svg>
 			</a>
 		</div>
-	</div>
-	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
+
+		<p class="subtitle">old site layouts live in the archive ↓</p>
+		<Pill href="/archive" ghost>archive</Pill>
+	</GlassPanel>
+
+	<footer>
+		<div class="aero-pill footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
+	</footer>
 </main>
 
 <style>
-	:global(*, *::before, *::after) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
-	:global(html, body) {
-		width: 100%;
-		height: 100%;
-		background: #000;
-	}
-
 	main {
+		position: relative;
 		width: 100%;
-		height: 100vh;
+		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		overflow: hidden;
-	}
-
-	.center {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.75rem;
+		padding: 2rem;
 	}
 
 	.name {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: clamp(1.1rem, 4vw, 1.6rem);
-		font-weight: 400;
-		color: #fff;
-		letter-spacing: 0.04em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		font-size: clamp(1.6rem, 5vw, 2.4rem);
+	}
+
+	.name a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.dot {
+		color: #2fb8c9;
+		-webkit-text-fill-color: #2fb8c9;
+	}
+
+	.pills {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem;
+		max-width: 460px;
 	}
 
 	.icons {
 		display: flex;
-		gap: 1.75rem;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
+		gap: 1.4rem;
 	}
 
-	.icons a {
-		color: #555;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: color 0.2s ease;
-	}
-
-	.icons a:hover {
-		color: #fff;
-	}
-
-	.icons svg {
-		width: 20px;
-		height: 20px;
-	}
-
-	.nav-link {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.75rem;
-		color: #444;
-		text-decoration: none;
-		letter-spacing: 0.1em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.35s;
-		transition: color 0.2s ease;
-	}
-
-	.nav-link:hover {
-		color: #fff;
-	}
-
-	.bg-gif {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: min(420px, 80vw);
-		height: auto;
-		opacity: 0.08;
-		pointer-events: none;
-		user-select: none;
-		mix-blend-mode: screen;
-		filter: grayscale(1);
+	.subtitle {
+		font-size: 0.7rem;
+		color: var(--aero-ink-soft);
+		opacity: 0.85;
 	}
 
 	footer {
-		border-top: 1px solid var(--border);
-		padding: 2rem;
-		text-align: center;
-		font-family: var(--mono);
-		font-size: 0.75rem;
-		color: white;
-		letter-spacing: 0.05em;
 		position: absolute;
-		bottom: 0;
+		bottom: 1.25rem;
 		left: 0;
 		width: 100%;
+		display: flex;
+		justify-content: center;
+		z-index: 2;
 	}
 
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(6px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	.footer-glass {
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
 	}
 </style>
