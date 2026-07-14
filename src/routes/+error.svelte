@@ -12,11 +12,11 @@
 				<span>contact@charmanita.dev</span>
 			</a>
 		</h1>
-		<img src="/images/stare.png" alt="error" />
+		<img src="/images/mii-wink.png" alt="error" />
 	{:else}
 		<h1 class="text-black">{$page.status}</h1>
 		<p>{$page.error?.message}</p>
-		<img src="/images/stare.png" alt="error" />
+		<img src="/images/mii-wink.png" alt="error" />
 	{/if}
 	<h1 class="text-black">
 		<a href="/">← charmanita.dev</a>
