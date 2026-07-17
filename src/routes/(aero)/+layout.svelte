@@ -1,5 +1,6 @@
 <script>
 	import './app.css';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 </script>
 
 <svelte:head>
@@ -17,6 +18,8 @@
 		<span class="aero-bubble b{i}"></span>
 	{/each}
 </div>
+
+<ThemeToggle />
 
 <div class="aero-page">
 	<slot />

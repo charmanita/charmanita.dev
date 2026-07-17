@@ -1,6 +1,14 @@
 <script lang="ts">
-	export let pose: 'sitting' | 'waving' | 'fists' | 'clasped' | 'singing' | 'leaning' | 'wink' =
-		'sitting';
+	export let pose:
+		| 'sitting'
+		| 'waving'
+		| 'fists'
+		| 'clasped'
+		| 'singing'
+		| 'leaning'
+		| 'wink'
+		| 'diamond-helm-and-pickaxe'
+		| 'charmanita-mc-skin' = 'sitting';
 	export let size: string | undefined = undefined;
 	export let lift: number = 78;
 </script>

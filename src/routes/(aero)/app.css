@@ -17,8 +17,39 @@
 	--aero-glass-border: rgba(255, 255, 255, 0.8);
 	--aero-shadow: rgba(20, 90, 110, 0.18);
 
+	--aero-divider: rgba(7, 55, 68, 0.1);
+	--aero-inset-bg: rgba(255, 255, 255, 0.4);
+
+	--status-online: #21b978;
+	--status-offline: #ff6b74;
+
 	--aero-font-display: 'Baloo 2', sans-serif;
 	--aero-font-body: 'Quicksand', sans-serif;
+
+	color-scheme: light;
+}
+
+/* ---------- Dark theme tokens ---------- */
+:root[data-theme='dark'] {
+	--aero-sky-top: #071b2b;
+	--aero-sky-mid: #0a2a36;
+	--aero-sky-bottom: #07231f;
+
+	--aero-aqua: #3ddced;
+	--aero-aqua-deep: #23b9cc;
+	--aero-ink: #eaf6fa;
+	--aero-ink-soft: #a9d3dc;
+	--aero-accent: #ff9dc2;
+
+	--aero-glass-hi: rgba(255, 255, 255, 0.09);
+	--aero-glass-lo: rgba(255, 255, 255, 0.03);
+	--aero-glass-border: rgba(255, 255, 255, 0.14);
+	--aero-shadow: rgba(0, 0, 0, 0.45);
+
+	--aero-divider: rgba(255, 255, 255, 0.12);
+	--aero-inset-bg: rgba(255, 255, 255, 0.05);
+
+	color-scheme: dark;
 }
 
 * ,
@@ -44,6 +75,7 @@ body {
 	inset: 0;
 	background: linear-gradient(180deg, var(--aero-sky-top) 0%, var(--aero-sky-mid) 55%, var(--aero-sky-bottom) 100%);
 	z-index: 0;
+	transition: background 0.3s ease;
 }
 
 .aero-sky::before {
@@ -54,6 +86,12 @@ body {
 		radial-gradient(ellipse 55% 30% at 18% 12%, rgba(255, 255, 255, 0.85), transparent 70%),
 		radial-gradient(ellipse 40% 22% at 78% 20%, rgba(255, 255, 255, 0.7), transparent 70%),
 		radial-gradient(ellipse 60% 35% at 50% 100%, rgba(140, 224, 200, 0.35), transparent 70%);
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+:root[data-theme='dark'] .aero-sky::before {
+	opacity: 0.25;
 }
 
 .aero-bubbles {
@@ -74,6 +112,10 @@ body {
 	box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.5);
 	animation: aero-rise linear infinite;
 	opacity: 0.7;
+}
+
+:root[data-theme='dark'] .aero-bubble {
+	opacity: 0.35;
 }
 
 @keyframes aero-rise {
@@ -108,6 +150,10 @@ body {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
+:root[data-theme='dark'] .aero-heading {
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
 .aero-heading .dot {
 	color: var(--aero-accent);
 	-webkit-text-fill-color: var(--aero-accent);
@@ -130,6 +176,15 @@ body {
 	isolation: isolate;
 }
 
+:root[data-theme='dark'] .aero-glass {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow:
+		0 8px 32px var(--aero-shadow),
+		inset 0 1px 0 rgba(255, 255, 255, 0.1),
+		inset 0 -12px 24px rgba(0, 0, 0, 0.2);
+}
+
 /* ---------- Shared pill buttons ---------- */
 
 .aero-pill {
@@ -147,7 +202,11 @@ body {
 	border: 1px solid var(--aero-glass-border);
 	box-shadow: 0 2px 6px var(--aero-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 	will-change: transform;
-	transition: transform 0.18s ease, box-shadow 0.18s ease;
+	transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.3s ease;
+}
+
+:root[data-theme='dark'] .aero-pill {
+	box-shadow: 0 2px 6px var(--aero-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .aero-pill::after {
@@ -162,10 +221,18 @@ body {
 	transition: left 0.5s ease;
 }
 
+:root[data-theme='dark'] .aero-pill::after {
+	background: rgba(255, 255, 255, 0.12);
+}
+
 .aero-pill:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 6px 14px rgba(20, 90, 110, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 	color: var(--aero-ink);
+}
+
+:root[data-theme='dark'] .aero-pill:hover {
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .aero-pill:hover::after {
@@ -174,6 +241,10 @@ body {
 
 .aero-pill-ghost {
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(180, 230, 220, 0.2));
+}
+
+:root[data-theme='dark'] .aero-pill-ghost {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
 }
 
 /* ---------- Shared icon buttons ---------- */
@@ -189,7 +260,12 @@ body {
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(200, 240, 235, 0.4));
 	border: 1px solid var(--aero-glass-border);
 	box-shadow: 0 2px 6px var(--aero-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-	transition: transform 0.18s ease, color 0.18s ease;
+	transition: transform 0.18s ease, color 0.18s ease, background 0.3s ease;
+}
+
+:root[data-theme='dark'] .aero-icon-btn {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+	box-shadow: 0 2px 6px var(--aero-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .aero-icon-btn:hover {

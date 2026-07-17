@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import MiiSitter from '$lib/components/MiiSitter.svelte';
 	let copied = false;
 	let serverOnline = false;
 	let version = '1.21.11';
@@ -27,7 +28,7 @@
 	});
 
 	function statusColor(status: string) {
-		return status === 'online' ? '#00ff88' : '#ff4444';
+		return status === 'online' ? 'var(--status-online)' : 'var(--status-offline)';
 	}
 
 	onDestroy(() => {
@@ -69,19 +70,25 @@
 	<meta property="og:description" content="Join the Minecraft server." />
 	<meta property="og:url" content="https://charmanita.dev/minecraft-server" />
 	<meta property="og:type" content="website" />
-	<meta name="theme-color" content="#00ff88" />
+	<meta name="theme-color" content="#1fb6c9" />
 </svelte:head>
 
 <main>
-	<div class="center">
-		<a href="/" class="back">← charmanita.dev</a>
+	<div class="back-row">
+		<a href="/" class="back aero-pill aero-pill-ghost">← charmanita.dev</a>
+	</div>
 
-		<p class="title">minecraft server</p>
+	<div class="center">
+		<div class="title-wrap">
+			<MiiSitter pose="diamond-helm-and-pickaxe" size="clamp(100px, 24vw, 100px)" lift={90} />
+			<h1 class="aero-heading title aero-pill">minecraft server</h1>
+		</div>
 
 		<div class="grid">
-			<div class="grid-col">
+			<div class="grid-col server-col">
+				<MiiSitter pose="charmanita-mc-skin" size="clamp(100px, 24vw, 100px)" lift={35} />
 				<p class="section-label">server</p>
-				<div class="card">
+				<div class="card aero-glass">
 					<div class="row">
 						<span class="label">ip</span>
 						<button
@@ -127,17 +134,22 @@
 					</div>
 				</div>
 				<p class="note">Click the IP to copy it to your clipboard</p>
-				<p class="link">Links:</p>
-				<a href="/minecraft-server/admin" class="admin-link">Admin Portal</a>
-				<a href="https://map.charmanita.dev" class="map-link"
-					><span class="dot" style="background: {mapOnline ? '#00ff88' : '#ff4444'}"></span>Map</a
-				>
+				<div class="links">
+					<a href="/minecraft-server/admin" class="aero-pill admin-link">Admin Portal</a>
+					<a href="https://map.charmanita.dev" class="aero-pill map-link">
+						<span
+							class="status-dot"
+							style="background: {mapOnline ? 'var(--status-online)' : 'var(--status-offline)'}"
+						></span>
+						Map
+					</a>
+				</div>
 			</div>
 
 			<div class="grid-col">
 				<p class="section-label">server bot</p>
 				{#if bots.length > 0}
-					<div class="card">
+					<div class="card aero-glass">
 						{#each bots as bot}
 							<div class="row">
 								<div class="bot-info">
@@ -149,7 +161,7 @@
 									<div class="bot-details">
 										<span class="label">{bot.display_name}</span>
 										<div class="bot-status">
-											<span class="dot" style="background: {statusColor(bot.status)}"></span>
+											<span class="status-dot" style="background: {statusColor(bot.status)}"></span>
 											<span class="value" style="color: {statusColor(bot.status)}"
 												>{bot.status}</span
 											>
@@ -169,25 +181,23 @@
 </main>
 
 <style>
-	:global(*, *::before, *::after) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
-	:global(html, body) {
-		width: 100%;
-		min-height: 100%;
-		background: #000;
-	}
-
 	main {
+		position: relative;
+		z-index: 1;
 		width: 100%;
 		min-height: 100vh;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		padding: 4rem 1rem;
+		gap: 1.75rem;
+	}
+
+	.back-row {
+		width: min(640px, 90vw);
+		display: flex;
+		justify-content: flex-start;
 	}
 
 	.center {
@@ -196,6 +206,12 @@
 		align-items: center;
 		gap: 1.75rem;
 		width: min(640px, 90vw);
+	}
+
+	.title-wrap {
+		position: relative;
+		display: flex;
+		justify-content: center;
 	}
 
 	.grid {
@@ -210,6 +226,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
+		padding-top: 3.5rem;
+	}
+
+	.server-col {
+		position: relative;
 	}
 
 	@media (max-width: 520px) {
@@ -219,26 +240,15 @@
 	}
 
 	.back {
-		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.7rem;
-		color: #444;
-		text-decoration: none;
-		letter-spacing: 0.1em;
+		letter-spacing: 0.06em;
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.05s;
-		transition: color 0.2s ease;
-	}
-
-	.back:hover {
-		color: #fff;
 	}
 
 	.title {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: clamp(1rem, 4vw, 1.4rem);
-		font-weight: 400;
-		color: #fff;
-		letter-spacing: 0.04em;
+		font-size: clamp(1.6rem, 6vw, 2.4rem);
+		text-align: center;
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.15s;
 	}
@@ -246,10 +256,8 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		border: 1px solid #1e1e1e;
-		border-radius: 4px;
-		overflow: hidden;
 		width: 100%;
+		padding: 0.25rem 0.5rem;
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.3s;
 	}
@@ -258,29 +266,31 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.75rem 1.25rem;
+		padding: 0.75rem 1rem;
 		gap: 1rem;
 	}
 
 	.divider {
 		height: 1px;
-		background: #1e1e1e;
+		margin: 0 1rem;
+		background: var(--aero-divider);
 	}
 
 	.label {
-		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.7rem;
-		color: #444;
-		letter-spacing: 0.1em;
+		color: var(--aero-ink-soft);
+		opacity: 0.65;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		flex-shrink: 0;
 	}
 
 	.value {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.8rem;
-		color: #ccc;
-		letter-spacing: 0.05em;
+		font-family: var(--aero-font-display);
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: var(--aero-ink);
+		letter-spacing: 0.02em;
 		text-align: right;
 	}
 
@@ -288,15 +298,16 @@
 		background: none;
 		border: none;
 		cursor: pointer;
-		color: #00ff88;
+		color: var(--aero-aqua-deep);
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
 		padding: 0;
 		transition: opacity 0.2s ease;
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.8rem;
-		letter-spacing: 0.05em;
+		font-family: var(--aero-font-display);
+		font-size: 0.85rem;
+		font-weight: 500;
+		letter-spacing: 0.02em;
 	}
 
 	.copyable:hover {
@@ -304,79 +315,60 @@
 	}
 
 	.copied-tag {
+		font-family: var(--aero-font-body);
 		font-size: 0.65rem;
-		color: #555;
-		letter-spacing: 0.08em;
-	}
-	.link {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.7rem;
-		color: #333;
-		text-decoration: none;
-		letter-spacing: 0.1em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.6s;
-		text-align: center;
-	}
-	.note {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.65rem;
-		color: #333;
-		letter-spacing: 0.08em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.5s;
-	}
-	.admin-link {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.7rem;
-		color: #333;
-		text-decoration: none;
-		letter-spacing: 0.1em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.6s;
-		transition: color 0.2s ease;
-		text-align: center;
+		font-weight: 600;
+		color: var(--aero-aqua);
+		letter-spacing: 0.06em;
 	}
 
-	.admin-link:hover {
-		color: #fff;
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem;
+		opacity: 0;
+		animation: fadeIn 0.8s ease forwards 0.6s;
 	}
+
+	.note {
+		font-size: 0.7rem;
+		color: var(--aero-ink-soft);
+		opacity: 0;
+		letter-spacing: 0.02em;
+		animation:
+			fadeIn 0.8s ease forwards 0.5s,
+			fadeToSoft 0.8s ease forwards 0.5s;
+	}
+
 	.map-link {
 		display: flex;
 		align-items: center;
-		gap: 0.4rem;
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.7rem;
-		color: #333;
-		text-decoration: none;
-		letter-spacing: 0.1em;
-		opacity: 0;
-		animation: fadeIn 0.8s ease forwards 0.6s;
-		transition: color 0.2s ease;
-		text-align: center;
-		align-self: center;
+		gap: 0.45rem;
 	}
-	.map-link:hover {
-		color: #fff;
-	}
+
 	.online {
-		color: #00ff88;
+		color: var(--status-online);
 	}
 
 	.offline {
-		color: #ff4444;
+		color: var(--status-offline);
 	}
 
 	.reason {
-		color: #555;
+		color: var(--aero-ink-soft);
+		opacity: 0.7;
 		font-size: 0.7rem;
+		font-family: var(--aero-font-body);
 	}
+
 	.section-label {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.65rem;
-		color: #333;
-		letter-spacing: 0.12em;
+		font-size: 0.68rem;
+		color: var(--aero-aqua-deep);
+		letter-spacing: 0.1em;
 		text-transform: uppercase;
+		font-weight: 600;
+		padding-left: 0.5rem;
 	}
 
 	.bot-info {
@@ -398,41 +390,52 @@
 	}
 
 	.avatar {
-		width: 24px;
-		height: 24px;
+		width: 28px;
+		height: 28px;
 		border-radius: 50%;
+		border: 1px solid var(--aero-glass-border);
 	}
 
 	.avatar-placeholder {
-		width: 24px;
-		height: 24px;
+		width: 28px;
+		height: 28px;
 		border-radius: 50%;
-		background: #1e1e1e;
+		background: var(--aero-glass-lo);
 	}
 
-	.dot {
+	.status-dot {
 		width: 6px;
 		height: 6px;
 		border-radius: 50%;
 		flex-shrink: 0;
+		box-shadow: 0 0 0 3px var(--aero-glass-border);
 	}
 
 	.invite {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.6rem;
+		font-family: var(--aero-font-body);
+		font-size: 0.65rem;
+		font-weight: 600;
 		color: #fff;
 		text-decoration: none;
-		letter-spacing: 0.08em;
-		background: #5865f2;
-		padding: 0.2rem 0.5rem;
+		letter-spacing: 0.04em;
+		background: linear-gradient(180deg, #7f8bff, #5865f2);
+		padding: 0.3rem 0.7rem;
 		line-height: 1;
-		border-radius: 3px;
-		transition: color 0.2s ease;
+		border-radius: 999px;
+		box-shadow:
+			0 2px 6px rgba(88, 101, 242, 0.35),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+		transition:
+			transform 0.18s ease,
+			box-shadow 0.18s ease;
 		white-space: nowrap;
 	}
 
 	.invite:hover {
-		opacity: 0.8;
+		transform: translateY(-2px);
+		box-shadow:
+			0 5px 12px rgba(88, 101, 242, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
 	}
 
 	@keyframes fadeIn {
@@ -443,6 +446,12 @@
 		to {
 			opacity: 1;
 			transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeToSoft {
+		to {
+			opacity: 0.7;
 		}
 	}
 </style>
