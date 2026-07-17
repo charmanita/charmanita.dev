@@ -146,6 +146,7 @@
 		gap: 3rem;
 		align-items: start;
 		width: 100%;
+		font-family: 'Quicksand';
 	}
 
 	.text p {
