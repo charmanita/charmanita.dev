@@ -30,10 +30,10 @@
 	}
 
 	function statusColor(status: string) {
-		if (status === 'online') return '#00ff88';
-		if (status === 'idle') return '#ffaa00';
-		if (status === 'dnd') return '#ff4444';
-		return '#444';
+		if (status === 'online') return 'var(--status-online)';
+		if (status === 'idle') return '#e0a539';
+		if (status === 'dnd') return 'var(--status-offline)';
+		return 'var(--aero-ink-soft)';
 	}
 </script>
 
@@ -44,14 +44,14 @@
 
 <main>
 	<div class="center">
-		<a href="/" class="back">← charmanita.dev</a>
-		<p class="title">status</p>
+		<a href="/" class="aero-pill aero-pill-ghost back">← charmanita.dev</a>
+		<p class="aero-heading title">status</p>
 
 		{#if loading}
 			<p class="empty">loading...</p>
 		{:else}
 			<p class="section-label">services</p>
-			<div class="card">
+			<div class="aero-glass card">
 				{#each Object.entries(services) as [name, up], i}
 					<div class="row">
 						<span class="label">{name}</span>
@@ -64,7 +64,7 @@
 			</div>
 
 			<p class="section-label">discord bots</p>
-			<div class="card">
+			<div class="aero-glass card">
 				{#each bots as bot, i}
 					<div class="row">
 						<div class="bot-info">
@@ -90,27 +90,19 @@
 			</div>
 		{/if}
 	</div>
-	<footer>© 2026 Hunter Roberson · charmanita.dev</footer>
+	<footer>
+		<div class="aero-pill footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
+	</footer>
 </main>
 
 <style>
-	:global(*, *::before, *::after) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-	:global(html, body) {
-		width: 100%;
-		min-height: 100%;
-		background: #000;
-	}
-
 	main {
 		width: 100%;
 		min-height: 100vh;
 		display: flex;
 		justify-content: center;
 		padding: 4rem 1rem;
+		padding-bottom: 5rem;
 	}
 
 	.center {
@@ -122,9 +114,7 @@
 	}
 
 	.back {
-		font-family: 'IBM Plex Mono', monospace;
 		font-size: 0.7rem;
-		color: #444;
 		text-decoration: none;
 		letter-spacing: 0.1em;
 		align-self: flex-start;
@@ -139,10 +129,7 @@
 	}
 
 	.title {
-		font-family: 'IBM Plex Mono', monospace;
 		font-size: clamp(1rem, 4vw, 1.4rem);
-		font-weight: 400;
-		color: #fff;
 		letter-spacing: 0.04em;
 		align-self: flex-start;
 		opacity: 0;
@@ -151,9 +138,9 @@
 	}
 
 	.section-label {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.65rem;
-		color: #333;
+		color: var(--aero-ink-soft);
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		align-self: flex-start;
@@ -164,47 +151,42 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		border: 1px solid #1e1e1e;
-		border-radius: 4px;
 		overflow: hidden;
 		width: 100%;
 		opacity: 0;
 		animation: fadeIn 0.8s ease forwards 0.3s;
 		margin-bottom: 1rem;
 	}
-
 	.row {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0.75rem 1.25rem;
+		padding: 0.85rem 1.25rem;
 	}
 
 	.divider {
 		height: 1px;
-		background: #1e1e1e;
+		background: var(--aero-divider);
 	}
 
 	.label {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.7rem;
-		color: #444;
-		letter-spacing: 0.1em;
+		color: var(--aero-ink);
+		letter-spacing: 0.05em;
 	}
-
 	.value {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.7rem;
 		letter-spacing: 0.05em;
 	}
 
 	.online {
-		color: #00ff88;
+		color: var(--status-online);
 	}
 	.offline {
-		color: #ff4444;
+		color: var(--status-offline);
 	}
-
 	.bot-info {
 		display: flex;
 		align-items: center;
@@ -227,7 +209,7 @@
 		width: 24px;
 		height: 24px;
 		border-radius: 50%;
-		background: #1e1e1e;
+		background: var(--aero-inset-bg);
 	}
 
 	.dot {
@@ -236,40 +218,51 @@
 		border-radius: 50%;
 		flex-shrink: 0;
 	}
-
-	.empty {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.75rem;
-		color: #333;
-		letter-spacing: 0.1em;
-	}
 	.invite {
-		font-family: 'IBM Plex Mono', monospace;
-		font-size: 0.6rem;
+		font-family: var(--aero-font-body);
+		font-size: 0.65rem;
+		font-weight: 600;
 		color: #fff;
 		text-decoration: none;
-		letter-spacing: 0.08em;
-		background: #5865f2;
-		padding: 0.2rem 0.5rem;
-		border-radius: 3px;
-		transition: color 0.2s ease;
+		letter-spacing: 0.04em;
+		background: linear-gradient(180deg, #7f8bff, #5865f2);
+		padding: 0.3rem 0.7rem;
+		line-height: 1;
+		border-radius: 999px;
+		box-shadow:
+			0 2px 6px rgba(88, 101, 242, 0.35),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+		transition:
+			transform 0.18s ease,
+			box-shadow 0.18s ease;
+		white-space: nowrap;
 	}
 
 	.invite:hover {
-		opacity: 0.8;
+		transform: translateY(-2px);
+		box-shadow:
+			0 5px 12px rgba(88, 101, 242, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+	}
+	.empty {
+		font-family: var(--aero-font-body);
+		font-size: 0.75rem;
+		color: var(--aero-ink-soft);
+		letter-spacing: 0.1em;
 	}
 	footer {
-		border-top: 1px solid var(--border);
-		padding: 2rem;
-		text-align: center;
-		font-family: var(--mono);
-		font-size: 0.75rem;
-		color: white;
-		letter-spacing: 0.05em;
 		position: absolute;
-		bottom: 0;
+		bottom: 1.25rem;
 		left: 0;
 		width: 100%;
+		display: flex;
+		justify-content: center;
+		z-index: 2;
+	}
+
+	.footer-glass {
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
 	}
 	@keyframes fadeIn {
 		from {

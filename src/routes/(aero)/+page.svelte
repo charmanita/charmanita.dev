@@ -119,6 +119,7 @@
 	}
 
 	.subtitle {
+		font-family: var(--aero-font-display);
 		font-size: 0.7rem;
 		color: var(--aero-ink-soft);
 		opacity: 0.85;

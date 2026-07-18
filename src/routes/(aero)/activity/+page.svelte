@@ -36,15 +36,15 @@
 
 <main>
 	<div class="center">
-		<a href="/" class="back">← charmanita.dev</a>
-		<p class="title">activity</p>
+		<a href="/" class="aero-pill aero-pill ghost back">← charmanita.dev</a>
+		<p class="aero-heading title">activity</p>
 
 		{#if loading}
 			<p class="empty">loading...</p>
 		{:else if commits.length === 0}
 			<p class="empty">no commits yet</p>
 		{:else}
-			<div class="feed">
+			<div class="aero-glass feed">
 				{#each commits as c}
 					<a href={c.url} target="_blank" rel="noopener" class="entry">
 						<div class="entry-top">
@@ -64,18 +64,6 @@
 </main>
 
 <style>
-	:global(*, *::before, *::after) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
-	:global(html, body) {
-		width: 100%;
-		min-height: 100%;
-		background: #000;
-	}
-
 	main {
 		width: 100%;
 		min-height: 100vh;
@@ -93,9 +81,9 @@
 	}
 
 	.back {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-display);
 		font-size: 0.7rem;
-		color: #444;
+		color: var(--aero-ink-soft);
 		text-decoration: none;
 		letter-spacing: 0.1em;
 		align-self: flex-start;
@@ -109,10 +97,10 @@
 	}
 
 	.title {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-display);
 		font-size: clamp(1rem, 4vw, 1.4rem);
 		font-weight: 400;
-		color: #fff;
+		color: var(--aero-ink);
 		letter-spacing: 0.04em;
 		align-self: flex-start;
 		opacity: 0;
@@ -123,7 +111,6 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		border: 1px solid #1e1e1e;
 		border-radius: 4px;
 		overflow: hidden;
 		opacity: 0;
@@ -134,8 +121,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.3rem;
-		padding: 0.85rem 1.25rem;
-		border-bottom: 1px solid #1e1e1e;
+		padding: 1rem 1.5rem;
+		border-bottom: 1px solid var(--aero-divider);
 		text-decoration: none;
 		transition: background 0.15s ease;
 	}
@@ -145,7 +132,7 @@
 	}
 
 	.entry:hover {
-		background: #0a0a0a;
+		background: var(--aero-inset-bg);
 	}
 
 	.entry:top {
@@ -155,23 +142,24 @@
 	}
 
 	.repo {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.7rem;
-		color: #00ff88;
+		font-weight: 600;
+		color: var(--aero-aqua-deep);
 		letter-spacing: 0.05em;
 	}
 
 	.branch {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.65rem;
-		color: #333;
+		color: var(--aero-ink-soft);
 		letter-spacing: 0.05em;
 	}
 
 	.time {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.65rem;
-		color: #333;
+		color: var(--aero-ink-soft);
 		letter-spacing: 0.05em;
 		margin-left: auto;
 	}
@@ -183,26 +171,26 @@
 	}
 
 	.sha {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.65rem;
-		color: #444;
+		color: var(--aero-ink-soft);
 		letter-spacing: 0.05em;
 		flex-shrink: 0;
 	}
 
 	.msg {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.7rem;
-		color: #aaa;
+		color: var(--aero-ink);
 		letter-spacing: 0.03em;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 	.empty {
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: var(--aero-font-body);
 		font-size: 0.75rem;
-		color: #333;
+		color: var(--aero-ink-soft);
 		letter-spacing: 0.1em;
 	}
 	@keyframes fadeIn {
