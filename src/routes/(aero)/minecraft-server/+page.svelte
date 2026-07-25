@@ -38,7 +38,7 @@
 	async function fetchStatus() {
 		try {
 			const [statusRes, configRes] = await Promise.all([
-				fetch('/api/status'),
+				fetch('https://api.charmanita.dev/public/status'),
 				fetch('/server-status.json')
 			]);
 			const data = await statusRes.json();
@@ -56,7 +56,7 @@
 		}
 		// BlueMap Check
 		try {
-			const mapRes = await fetch('/api/map-status', { cache: 'no-store' });
+			const mapRes = await fetch('/map-status', { cache: 'no-store' });
 			mapOnline = mapRes.ok;
 		} catch {
 			mapOnline = false;

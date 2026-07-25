@@ -23,7 +23,7 @@
 	}
 
 	onMount(async () => {
-		const res = await fetch('/api/commits');
+		const res = await fetch('https://api.charmanita.dev/public/commits');
 		commits = await res.json();
 		loading = false;
 	});

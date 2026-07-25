@@ -23,7 +23,10 @@
 	onDestroy(() => clearInterval(interval));
 
 	async function fetchAll() {
-		const [sres, bres] = await Promise.all([fetch('/api/services'), fetch('/api/bots')]);
+		const [sres, bres] = await Promise.all([
+			fetch('https://api.charmanita.dev/public/services'),
+			fetch('https://api.charmanita.dev/public/bots')
+		]);
 		services = await sres.json();
 		bots = await bres.json();
 		loading = false;
