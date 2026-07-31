@@ -96,6 +96,10 @@
 				<span class="contact-icon">ⓘ</span>
 				<span>linkedin.com/in/hunterdroberson</span>
 			</a>
+			<a href="/resume" class="aero-pill contact-item">
+				<span class="contact-icon">📃</span>
+				<span>Resume</span>
+			</a>
 		</div>
 	</GlassPanel>
 
