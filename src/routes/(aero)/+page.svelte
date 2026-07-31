@@ -33,6 +33,7 @@
 			<Pill href="/status">bot &amp; service status</Pill>
 			<Pill href="/snake">snake game</Pill>
 			<Pill href="/calculator">calculator thing</Pill>
+			<Pill href="/resume">resume</Pill>
 		</nav>
 
 		<div class="icons">
