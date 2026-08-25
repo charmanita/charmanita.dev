@@ -36,6 +36,13 @@
 	<GlassPanel maxWidth="760px">
 		<MiiSitter pose="leaning" size="190px" />
 		<div class="section-label">// about</div>
+		<a href="https://github.com/charmanita">
+			<img
+				class="avatar"
+				src="https://github.com/charmanita.png?size=200"
+				alt="Charmanita GitHub Profile Pic"
+			/>
+		</a>
 		<h1 class="aero-heading">Who I Am</h1>
 
 		<div class="body">
@@ -248,7 +255,15 @@
 			word-break: break-all;
 		}
 	}
-
+	img.avatar {
+		width: 200px;
+		height: 200px;
+		object-fit: cover;
+		transition: transform 0.2s;
+	}
+	img.avatar:hover {
+		transform: scale(1.05);
+	}
 	@keyframes fadeIn {
 		from {
 			opacity: 0;
