@@ -21,9 +21,16 @@
 <main>
 	<GlassPanel>
 		<MiiSitter pose="sitting" size="clamp(250px, 40vw, 250px)" lift={90} />
-
-		<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
-
+		<div class="brand-row">
+			<a href="https://github.com/charmanita">
+				<img
+					class="avatar"
+					src="https://github.com/charmanita.png?size=200"
+					alt="Charmanita GitHub Profile Pic"
+				/>
+			</a>
+			<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
+		</div>
 		<nav class="pills">
 			<Pill href="/about">about</Pill>
 			<Pill href="https://blog.charmanita.dev">blog</Pill>
@@ -125,7 +132,21 @@
 		color: var(--aero-ink-soft);
 		opacity: 0.85;
 	}
-
+	.brand-row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.avatar {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		object-fit: cover;
+		transition: transform 0.2s;
+	}
+	.avatar:hover {
+		transform: scale(1.06);
+	}
 	footer {
 		position: absolute;
 		bottom: 1.25rem;
