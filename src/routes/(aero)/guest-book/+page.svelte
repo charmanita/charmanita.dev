@@ -4,6 +4,17 @@
 	import { formatDate } from '$lib/utils/date';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 </script>
+<svelte:head>
+	<title>guestbook - charmanita.dev</title>
+	<meta property="og:title" content="guestbook - charmanita.dev"/>
+	<meta property="og:description" content="Sign the guestbook at charmanita.dev!"/>
+	<meta property="og:url" content="https://charmanita.dev/guest-book/"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:image" content="https://charmanita.dev/images/charmanitadevguestbook.png"/>
+	<meta name="theme-color" content="#2fb8c9"/>
+	<meta property="og:site_name" content="guestbook - charmanita.dev"/>
+</svelte:head>
+
 
 <h1 class="aero-heading">charmanita<span class="dot">.</span>dev guestbook</h1>
 <p class="aero-body">Leave a note on the guestbook of <a href="https://charmanita.dev">charmanita.dev</a>!</p>
