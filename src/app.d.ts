@@ -6,8 +6,11 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env: {
+				GUESTBOOK_DB: D1Database;
+			}
+		}
 	}
 }
-
 export {};

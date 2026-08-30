@@ -41,6 +41,7 @@
 			<Pill href="/snake">snake game</Pill>
 			<Pill href="/calculator">calculator thing</Pill>
 			<Pill href="/resume">resume</Pill>
+			<Pill href="/guest-book">guestbook</Pill>
 		</nav>
 
 		<div class="icons">
