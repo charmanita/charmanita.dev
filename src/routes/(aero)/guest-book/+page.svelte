@@ -2,33 +2,38 @@
 	import type { PageData, ActionData } from './$types';
 	import { enhance } from '$app/forms';
 	import { formatDate } from '$lib/utils/date';
+	import EntryTime from '$lib/components/EntryTime.svelte';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 </script>
+
 <svelte:head>
 	<title>guestbook - charmanita.dev</title>
-	<meta property="og:title" content="guestbook - charmanita.dev"/>
-	<meta property="og:description" content="Sign the guestbook at charmanita.dev!"/>
-	<meta property="og:url" content="https://charmanita.dev/guest-book/"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:image" content="https://charmanita.dev/images/charmanitadevguestbook.png"/>
-	<meta name="theme-color" content="#2fb8c9"/>
-	<meta property="og:site_name" content="guestbook - charmanita.dev"/>
+	<meta property="og:title" content="guestbook - charmanita.dev" />
+	<meta property="og:description" content="Sign the guestbook at charmanita.dev!" />
+	<meta property="og:url" content="https://charmanita.dev/guest-book/" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://charmanita.dev/images/charmanitadevguestbook.png" />
+	<meta name="theme-color" content="#2fb8c9" />
+	<meta property="og:site_name" content="guestbook - charmanita.dev" />
 </svelte:head>
 
-
 <h1 class="aero-heading">charmanita<span class="dot">.</span>dev guestbook</h1>
-<p class="aero-body">Leave a note on the guestbook of <a href="https://charmanita.dev">charmanita.dev</a>!</p>
+<p class="aero-body">
+	Leave a note on the guestbook of <a href="https://charmanita.dev">charmanita.dev</a>!
+</p>
 <form method="POST" use:enhance class="aero-glass guestbook-form">
 	<label>
 		Name
-		<input type="text" name="name" required maxlength="60"/>
+		<input type="text" name="name" required maxlength="60" />
 	</label>
 	<label>
 		Email <span class="optional">(optional, not shown publicly)</span>
 		<input type="email" name="email" maxlength="255" />
 	</label>
 	<p class="email-disclaimer">
-		If you share your email, you agree to subscribing to my blog at <a href="https://blog.charmanita.dev">blog.charmanita.dev</a>!
+		If you share your email, you agree to subscribing to my blog at <a
+			href="https://blog.charmanita.dev">blog.charmanita.dev</a
+		>!
 	</p>
 
 	<label>
@@ -39,12 +44,12 @@
 		<p class="form-error">{form.error}</p>
 	{/if}
 
-	<button type="submit" class=aero-pill>Sign the guestbook!</button>
+	<button type="submit" class="aero-pill">Sign the guestbook!</button>
 </form>
 <div class="entries">
 	{#each data.entries as entry (entry.id)}
 		<article class="aero-glass entry">
-			<time datetime={entry.created_at}>{formatDate(entry.created_at)}</time>
+			<EntryTime isoString={entry.created_at} />
 			<p class="entry-name">{entry.name}</p>
 			<p class="entry-message">{entry.message}</p>
 		</article>
@@ -82,6 +87,7 @@
 		color: var(--aero-ink-soft);
 		opacity: 0.75;
 		margin-bottom: 0.35rem;
+		min-height: 1em;
 	}
 
 	.entry-name {
