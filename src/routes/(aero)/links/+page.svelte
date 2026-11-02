@@ -36,8 +36,9 @@
 		</div>
 		<nav class="pills">
 			<Pill href="https://music.apple.com/us/artist/h-ntrr/1737464087">Apple Music</Pill>
-			<Pill href="https://instagram.com/h.ntrr">Instagram</Pill>
 			<Pill href="https://music.apple.com/us/artist/h-ntrr/1737464087">Apple Music</Pill>
+			<Pill href="https://instagram.com/h.ntrr">Instagram</Pill>
+			<Pill href="https://linktr.ee/h.ntrr">Linktree</Pill>
 			<Pill href="https://open.spotify.com/artist/5JvAjTQNHUbgioFKvtMx3f">Spotify</Pill>
 			<Pill href="https://tiktok.com/@h.ntrr">TikTok</Pill>
 		</nav>
