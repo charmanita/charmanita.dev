@@ -42,6 +42,9 @@
 			<Pill href="https://tiktok.com/@h.ntrr">TikTok</Pill>
 		</nav>
 	</GlassPanel>
+	<footer>
+		<div class="aero-pill footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
+	</footer>
 </main>
 
 <style>
@@ -76,32 +79,10 @@
 		gap: 0.6rem;
 		max-width: 460px;
 	}
-
-	.icons {
-		display: flex;
-		gap: 1.4rem;
-	}
-
-	.subtitle {
-		font-family: var(--aero-font-display);
-		font-size: 0.7rem;
-		color: var(--aero-ink-soft);
-		opacity: 0.85;
-	}
 	.brand-row {
 		display: flex;
 		align-items: center;
 		gap: 12px;
-	}
-	.avatar {
-		width: 100px;
-		height: 100px;
-		border-radius: 50%;
-		object-fit: cover;
-		transition: transform 0.2s;
-	}
-	.avatar:hover {
-		transform: scale(1.06);
 	}
 	footer {
 		position: absolute;
