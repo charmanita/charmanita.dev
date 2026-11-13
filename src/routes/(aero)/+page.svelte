@@ -2,6 +2,105 @@
 	import GlassPanel from '$lib/components/GlassPanel.svelte';
 	import Pill from '$lib/components/Pill.svelte';
 	import MiiSitter from '$lib/components/MiiSitter.svelte';
+	import { onMount, onDestroy } from 'svelte';
+
+	let presence: any = null;
+	let ring: { prev?: string; random?: string; next?: string } = {};
+	let ringEl: HTMLDivElement | undefined;
+	let showRing = false;
+	let ws: WebSocket;
+
+	function findRingSection(): HTMLElement | null {
+		for (const sec of document.querySelectorAll<HTMLElement>('section')) {
+			const t = (sec.textContent ?? '').toLowerCase();
+			if (t.includes('prev') && t.includes('next') && !sec.closest('main')) return sec;
+		}
+		return null;
+	}
+
+	function hrefFor(sec: HTMLElement, label: string) {
+		return [...sec.querySelectorAll('a')].find((a) => a.textContent?.toLowerCase().includes(label))
+			?.href;
+	}
+
+	function hideRingWidget() {
+		const sec = findRingSection();
+		if (!sec) return false;
+		ring = {
+			prev: hrefFor(sec, 'prev'),
+			random: hrefFor(sec, 'random'),
+			next: hrefFor(sec, 'next')
+		};
+		const top = (sec.closest('body > *') as HTMLElement) ?? sec;
+		(top.querySelector('main') ? sec : top).style.display = 'none';
+		return true;
+	}
+
+	onMount(() => {
+		ws = new WebSocket('wss://api.lanyard.rest/socket');
+		ws.onmessage = (e) => {
+			const msg = JSON.parse(e.data);
+			if (msg.op === 1) {
+				setInterval(() => ws.send(JSON.stringify({ op: 3 })), msg.d.heartbeat_interval);
+				ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: '485957450009149451' } }));
+			}
+			if (msg.op === 0) presence = msg.d;
+		};
+
+		const observer = new MutationObserver(() => {
+			if (hideRingWidget()) observer.disconnect();
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
+
+		const s = document.createElement('script');
+		s.src = 'https://lanyard.cafe/api/embed.js';
+		s.async = true;
+		ringEl?.appendChild(s);
+
+		return () => {
+			observer.disconnect();
+			s.remove();
+			const sec = findRingSection();
+			if (sec) ((sec.closest('body > *') as HTMLElement) ?? sec).remove();
+		};
+	});
+
+	onDestroy(() => ws?.close());
+
+	const labels: Record<string, string> = {
+		online: 'Online',
+		idle: 'Idle',
+		dnd: 'Do Not Disturb',
+		offline: 'Offline'
+	};
+
+	$: activity =
+		presence?.activities?.find((a: any) => a.type === 2) ??
+		presence?.activities?.find((a: any) => a.type === 0);
+	$: activityImage = activity ? getActivityImage(activity) : null;
+	$: customStatus = presence?.activities?.find((a: any) => a.type === 4);
+	$: emojiUrl = customStatus?.emoji?.id
+		? `https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${customStatus.emoji.animated ? 'gif' : 'png'}?size=32`
+		: null;
+	$: statusEmoji = customStatus?.emoji && !customStatus.emoji.id ? customStatus.emoji.name : null;
+	$: status = presence?.discord_status ?? 'offline';
+	$: statusLabel = labels[status] ?? status;
+	$: avatarUrl = presence?.discord_user
+		? presence.discord_user.avatar
+			? `https://cdn.discordapp.com/avatars/${presence.discord_user.id}/${presence.discord_user.avatar}.png?size=128`
+			: `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(presence.discord_user.id) % 6n)}.png`
+		: null;
+	function getActivityImage(activity: any): string | null {
+		const img = activity.assets?.large_image;
+		if (!img) return null;
+		if (img.startsWith('spotify:')) return `https://i.scdn.co/image/${img.replace('spotify:', '')}`;
+		if (img.startsWith('mp:external/'))
+			return `https://media.discordapp.net/external/${img.replace('mp:external/', '')}`;
+		return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
+	}
+	function focusOnMount(node: HTMLElement) {
+		node.focus();
+	}
 </script>
 
 <svelte:head>
@@ -18,6 +117,8 @@
 	<meta property="og:site_name" content="charmanita.dev" />
 </svelte:head>
 
+<svelte:window on:keydown={(e) => e.key === 'Escape' && (showRing = false)} />
+
 <main>
 	<GlassPanel>
 		<MiiSitter pose="sitting" size="clamp(250px, 40vw, 250px)" lift={90} />
@@ -29,19 +130,59 @@
 					alt="Charmanita GitHub Profile Pic"
 				/>
 			</a>
-			<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
+			<div class="identity">
+				<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
+				<div class="user-row">
+					<span class="discord-dot {status}"></span>
+					<p class="aero-heading username">
+						@{presence?.discord_user?.username ?? 'charmanita'}
+					</p>
+				</div>
+			</div>
 		</div>
+
+		{#if presence}
+			<div class="bubble">
+				<div class="bubble-status">
+					{statusLabel}
+				</div>
+
+				{#if customStatus && (statusEmoji || emojiUrl || customStatus.state)}
+					<div class="bubble-custom">
+						{#if emojiUrl}
+							<img class="emoji" src={emojiUrl} alt="" />
+						{:else if statusEmoji}
+							<span>{statusEmoji}</span>
+						{/if}
+						{#if customStatus.state}<span>{customStatus.state}</span>{/if}
+					</div>
+				{/if}
+
+				{#if activity}
+					<div class="bubble-activity">
+						{#if activityImage}
+							<img class="activity-art" src={activityImage} alt="" />
+						{/if}
+						<div class="activity-text">
+							<span>{activity.name}</span>
+							{#if activity.details}<span>{activity.details}</span>{/if}
+							{#if activity.state}<span>{activity.state}</span>{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
+		{/if}
 		<nav class="pills">
-			<Pill href="/about">about</Pill>
-			<Pill href="https://blog.charmanita.dev">blog</Pill>
+			<Pill href="/about">About</Pill>
+			<Pill href="https://blog.charmanita.dev">Blog</Pill>
 			<Pill href="https://charmit.charmanita.dev">charmIT</Pill>
-			<Pill href="/minecraft-server">minecraft server</Pill>
-			<Pill href="/activity">github activity</Pill>
-			<Pill href="/status">bot &amp; service status</Pill>
-			<Pill href="/snake">snake game</Pill>
-			<Pill href="/calculator">calculator thing</Pill>
-			<Pill href="/resume">resume</Pill>
-			<Pill href="/guest-book">guestbook</Pill>
+			<Pill href="/minecraft-server">Minecraft Server</Pill>
+			<Pill href="/activity">GitHub Activity</Pill>
+			<Pill href="/status">Bot &amp; Service Status</Pill>
+			<Pill href="/snake">Snake Game</Pill>
+			<Pill href="/calculator">Calculator</Pill>
+			<Pill href="/resume">Resume</Pill>
+			<Pill href="/guest-book">Guestbook</Pill>
 		</nav>
 
 		<div class="icons">
@@ -71,15 +212,62 @@
 					/>
 				</svg>
 			</a>
+			<div bind:this={ringEl}></div>
 		</div>
 
 		<p class="subtitle">old site layouts live in the archive ↓</p>
 		<Pill href="/archive" ghost>archive</Pill>
+		{#if ring.prev}
+			<nav class="ring">
+				<button
+					class="ring-badge"
+					on:click={() => (showRing = true)}
+					aria-label="About the lanyard.cafe webring"
+				>
+					<img src="https://lanyard.cafe/lanyard.png" alt="" width="24" height="24" />
+				</button>
+			</nav>
+		{/if}
 	</GlassPanel>
-
 	<footer>
 		<div class="aero-pill footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
 	</footer>
+	{#if showRing}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class="overlay" role="presentation" on:click={() => (showRing = false)}>
+			<div
+				class="modal"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="ring-title"
+				tabindex="-1"
+				use:focusOnMount
+				on:click|stopPropagation
+			>
+				<GlassPanel>
+					<h2 id="ring-title" class="aero-heading">Lanyard</h2>
+					<p class="modal-text">
+						<a href="https://charmanita.dev">charmanita.dev</a> is affiliated with
+						<a href="https://lanyard.cafe">lanyard.cafe</a>, a collection of personal websites that
+						are linked together in a webring. I use
+						<a href="https://discord.gg/XpQnThHkAH">Lanyard</a> as a way to show my status on Discord.
+						It's pretty neat. Use the buttons below to browse through the Lanyard Cafe!
+					</p>
+					{#if ring.prev}
+						<nav class="ring">
+							<Pill href={ring.prev}>Previous</Pill>
+							<Pill href={ring.random}>Random</Pill>
+							<Pill href={ring.next}>Next</Pill>
+						</nav>
+					{/if}
+					<a class="modal-link" href="https://lanyard.cafe" target="_blank" rel="noopener">
+						Lanyard Cafe ↗
+					</a>
+					<button class="aero-pill close-btn" on:click={() => (showRing = false)}>close</button>
+				</GlassPanel>
+			</div>
+		</div>
+	{/if}
 </main>
 
 <style>
@@ -101,12 +289,100 @@
 		text-decoration: none;
 		color: inherit;
 	}
+	.activity-art {
+		width: 44px;
+		height: 44px;
+		border-radius: 8px;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+	.activity-text {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		opacity: 0.85;
+	}
+	.bubble {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+		max-width: 90%;
+		padding: 0.6rem 1rem;
+		margin-top: 0.6rem;
+		border-radius: 1.1rem;
+		background: rgba(255, 255, 255, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+		backdrop-filter: blur(6px);
+		font-family: var(--aero-font-display);
+		font-size: 0.8rem;
+		color: var(--aero-ink-soft);
+		text-align: center;
+	}
 
+	.bubble-activity {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-top: 0.2rem;
+		text-align: left;
+		font-size: 0.72rem;
+	}
+
+	.bubble-status {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-weight: 700;
+	}
+
+	.bubble-custom {
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.bubble-activity {
+		opacity: 0.8;
+		font-size: 0.72rem;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+	}
 	.dot {
 		color: #2fb8c9;
 		-webkit-text-fill-color: #2fb8c9;
 	}
+	.discord-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
 
+	.discord-dot.online {
+		background: #00ff88;
+	}
+	.discord-dot.idle {
+		background: #faa61a;
+	}
+	.discord-dot.dnd {
+		background: #f04747;
+	}
+	.discord-dot.offline {
+		background: #747f8d;
+	}
+
+	.emoji {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+	}
 	.pills {
 		display: flex;
 		flex-wrap: wrap;
@@ -115,11 +391,75 @@
 		max-width: 460px;
 	}
 
+	.ring {
+		display: flex;
+		gap: 0.6rem;
+		justify-content: center;
+		align-items: center;
+	}
+	.ring-badge {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.12);
+		cursor: pointer;
+		transition: transform 0.2s;
+	}
+	.ring-badge:hover {
+		transform: scale(1.1);
+	}
+
+	.overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		display: grid;
+		place-items: center;
+		padding: 1rem;
+		background: rgba(0, 0, 0, 0.45);
+	}
+
+	.modal {
+		width: min(420px, 100%);
+		text-align: center;
+	}
+
+	.modal-text {
+		font-family: var(--aero-font-display);
+		font-size: 0.85rem;
+		color: var(--aero-ink-soft);
+	}
+
+	.modal-link {
+		font-family: var(--aero-font-display);
+		font-size: 0.8rem;
+	}
+
+	.close-btn {
+		cursor: pointer;
+	}
+	.identity {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
 	.icons {
 		display: flex;
 		gap: 1.4rem;
 	}
 
+	.user-row {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.username {
+		font-size: 0.9rem;
+	}
 	.subtitle {
 		font-family: var(--aero-font-display);
 		font-size: 0.7rem;
