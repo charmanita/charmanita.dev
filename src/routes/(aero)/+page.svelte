@@ -5,36 +5,7 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	let presence: any = null;
-	let ring: { prev?: string; random?: string; next?: string } = {};
-	let ringEl: HTMLDivElement | undefined;
-	let showRing = false;
 	let ws: WebSocket;
-
-	function findRingSection(): HTMLElement | null {
-		for (const sec of document.querySelectorAll<HTMLElement>('section')) {
-			const t = (sec.textContent ?? '').toLowerCase();
-			if (t.includes('prev') && t.includes('next') && !sec.closest('main')) return sec;
-		}
-		return null;
-	}
-
-	function hrefFor(sec: HTMLElement, label: string) {
-		return [...sec.querySelectorAll('a')].find((a) => a.textContent?.toLowerCase().includes(label))
-			?.href;
-	}
-
-	function hideRingWidget() {
-		const sec = findRingSection();
-		if (!sec) return false;
-		ring = {
-			prev: hrefFor(sec, 'prev'),
-			random: hrefFor(sec, 'random'),
-			next: hrefFor(sec, 'next')
-		};
-		const top = (sec.closest('body > *') as HTMLElement) ?? sec;
-		(top.querySelector('main') ? sec : top).style.display = 'none';
-		return true;
-	}
 
 	onMount(() => {
 		ws = new WebSocket('wss://api.lanyard.rest/socket');
@@ -45,23 +16,6 @@
 				ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: '485957450009149451' } }));
 			}
 			if (msg.op === 0) presence = msg.d;
-		};
-
-		const observer = new MutationObserver(() => {
-			if (hideRingWidget()) observer.disconnect();
-		});
-		observer.observe(document.body, { childList: true, subtree: true });
-
-		const s = document.createElement('script');
-		s.src = 'https://lanyard.cafe/api/embed.js';
-		s.async = true;
-		ringEl?.appendChild(s);
-
-		return () => {
-			observer.disconnect();
-			s.remove();
-			const sec = findRingSection();
-			if (sec) ((sec.closest('body > *') as HTMLElement) ?? sec).remove();
 		};
 	});
 
@@ -98,9 +52,6 @@
 			return `https://media.discordapp.net/external/${img.replace('mp:external/', '')}`;
 		return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
 	}
-	function focusOnMount(node: HTMLElement) {
-		node.focus();
-	}
 </script>
 
 <svelte:head>
@@ -116,8 +67,6 @@
 	<meta name="theme-color" content="#2fb8c9" />
 	<meta property="og:site_name" content="charmanita.dev" />
 </svelte:head>
-
-<svelte:window on:keydown={(e) => e.key === 'Escape' && (showRing = false)} />
 
 <main>
 	<GlassPanel>
@@ -212,62 +161,14 @@
 					/>
 				</svg>
 			</a>
-			<div bind:this={ringEl}></div>
 		</div>
 
 		<p class="subtitle">old site layouts live in the archive ↓</p>
 		<Pill href="/archive" ghost>archive</Pill>
-		{#if ring.prev}
-			<nav class="ring">
-				<button
-					class="ring-badge"
-					on:click={() => (showRing = true)}
-					aria-label="About the lanyard.cafe webring"
-				>
-					<img src="https://lanyard.cafe/lanyard.png" alt="" width="24" height="24" />
-				</button>
-			</nav>
-		{/if}
 	</GlassPanel>
 	<footer>
 		<div class="aero-pill footer-glass">© 2026 Hunter Roberson · charmanita.dev</div>
 	</footer>
-	{#if showRing}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div class="overlay" role="presentation" on:click={() => (showRing = false)}>
-			<div
-				class="modal"
-				role="dialog"
-				aria-modal="true"
-				aria-labelledby="ring-title"
-				tabindex="-1"
-				use:focusOnMount
-				on:click|stopPropagation
-			>
-				<GlassPanel>
-					<h2 id="ring-title" class="aero-heading">Lanyard</h2>
-					<p class="modal-text">
-						<a href="https://charmanita.dev">charmanita.dev</a> is affiliated with
-						<a href="https://lanyard.cafe">lanyard.cafe</a>, a collection of personal websites that
-						are linked together in a webring. I use
-						<a href="https://discord.gg/XpQnThHkAH">Lanyard</a> as a way to show my status on Discord.
-						It's pretty neat. Use the buttons below to browse through the Lanyard Cafe!
-					</p>
-					{#if ring.prev}
-						<nav class="ring">
-							<Pill href={ring.prev}>Previous</Pill>
-							<Pill href={ring.random}>Random</Pill>
-							<Pill href={ring.next}>Next</Pill>
-						</nav>
-					{/if}
-					<a class="modal-link" href="https://lanyard.cafe" target="_blank" rel="noopener">
-						Lanyard Cafe ↗
-					</a>
-					<button class="aero-pill close-btn" on:click={() => (showRing = false)}>close</button>
-				</GlassPanel>
-			</div>
-		</div>
-	{/if}
 </main>
 
 <style>
@@ -391,57 +292,6 @@
 		max-width: 460px;
 	}
 
-	.ring {
-		display: flex;
-		gap: 0.6rem;
-		justify-content: center;
-		align-items: center;
-	}
-	.ring-badge {
-		display: grid;
-		place-items: center;
-		width: 36px;
-		height: 36px;
-		padding: 0;
-		border: none;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.12);
-		cursor: pointer;
-		transition: transform 0.2s;
-	}
-	.ring-badge:hover {
-		transform: scale(1.1);
-	}
-
-	.overlay {
-		position: fixed;
-		inset: 0;
-		z-index: 50;
-		display: grid;
-		place-items: center;
-		padding: 1rem;
-		background: rgba(0, 0, 0, 0.45);
-	}
-
-	.modal {
-		width: min(420px, 100%);
-		text-align: center;
-	}
-
-	.modal-text {
-		font-family: var(--aero-font-display);
-		font-size: 0.85rem;
-		color: var(--aero-ink-soft);
-	}
-
-	.modal-link {
-		font-family: var(--aero-font-display);
-		font-size: 0.8rem;
-	}
-
-	.close-btn {
-		cursor: pointer;
-	}
 	.identity {
 		display: flex;
 		flex-direction: column;
