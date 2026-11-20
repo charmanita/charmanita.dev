@@ -135,7 +135,7 @@
 				<div class="user-row">
 					<span class="discord-dot {status}"></span>
 					<p class="aero-heading username">
-						@{presence?.discord_user?.username ?? 'charmanita'}
+						@{presence?.discord_user?.username ?? 'charmanita'} | Hunter Roberson
 					</p>
 				</div>
 			</div>
