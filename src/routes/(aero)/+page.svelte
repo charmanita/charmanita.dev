@@ -82,17 +82,26 @@
 			<div class="identity">
 				<p class="aero-heading name"><a href="/">charmanita<span class="dot">.</span>dev</a></p>
 				<div class="user-row">
-					<span class="discord-dot {status}"></span>
-					<p class="aero-heading username">
-						@{presence?.discord_user?.username ?? 'charmanita'} | Hunter Roberson
-					</p>
+					<p class="aero-heading username">Hunter Roberson</p>
 				</div>
 			</div>
 		</div>
 
 		{#if presence}
 			<div class="bubble">
+				<div class="bubble-pfp">
+					<img src={avatarUrl} alt="Charmanita Discord avatar" />
+				</div>
 				<div class="bubble-status">
+					<span class="discord-user">
+						{presence?.discord_user?.global_name}
+						<a href="https://discord.com/users/485957450009149451"
+							>@{presence?.discord_user?.username ?? 'charmanita'}</a
+						></span
+					>
+				</div>
+				<div class="bubble-status">
+					<span class="discord-dot {status}"></span>
 					{statusLabel}
 				</div>
 
@@ -248,7 +257,19 @@
 		opacity: 0.8;
 		font-size: 0.72rem;
 	}
+	.bubble-pfp {
+		position: static;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 6px;
+	}
 
+	.bubble-pfp img {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -277,6 +298,21 @@
 	}
 	.discord-dot.offline {
 		background: #747f8d;
+	}
+	.discord-user {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		line-height: 1.3;
+	}
+	.discord-user a,
+	.discord-user a:visited {
+		color: inherit;
+		text-decoration: none;
+		transition: transform 0.2s;
+	}
+	.discord-user a:hover {
+		transform: scale(1.06);
 	}
 
 	.emoji {
@@ -308,7 +344,7 @@
 		gap: 6px;
 	}
 	.username {
-		font-size: 0.9rem;
+		font-size: 1rem;
 	}
 	.subtitle {
 		font-family: var(--aero-font-display);
