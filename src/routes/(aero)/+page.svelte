@@ -6,20 +6,29 @@
 
 	let presence: any = null;
 	let ws: WebSocket;
+	let heartbeat: ReturnType<typeof setInterval>;
+	let tick: ReturnType<typeof setInterval>;
+	let now = Date.now();
 
 	onMount(() => {
+		tick = setInterval(() => (now = Date.now()), 1000);
+
 		ws = new WebSocket('wss://api.lanyard.rest/socket');
 		ws.onmessage = (e) => {
 			const msg = JSON.parse(e.data);
 			if (msg.op === 1) {
-				setInterval(() => ws.send(JSON.stringify({ op: 3 })), msg.d.heartbeat_interval);
+				heartbeat = setInterval(() => ws.send(JSON.stringify({ op: 3 })), msg.d.heartbeat_interval);
 				ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: '485957450009149451' } }));
 			}
 			if (msg.op === 0) presence = msg.d;
 		};
 	});
 
-	onDestroy(() => ws?.close());
+	onDestroy(() => {
+		clearInterval(heartbeat);
+		clearInterval(tick);
+		ws?.close();
+	});
 
 	const labels: Record<string, string> = {
 		online: 'Online',
@@ -44,6 +53,18 @@
 			? `https://cdn.discordapp.com/avatars/${presence.discord_user.id}/${presence.discord_user.avatar}.png?size=128`
 			: `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(presence.discord_user.id) % 6n)}.png`
 		: null;
+
+	$: start = activity?.timestamps?.start;
+	$: end = activity?.timestamps?.end;
+	$: elapsed = start ? Math.max(0, Math.min(now, end ?? now) - start) : 0;
+
+	function formatTime(ms: number): string {
+		const total = Math.floor(ms / 1000);
+		const h = Math.floor(total / 3600);
+		const m = Math.floor((total % 3600) / 60);
+		const s = String(total % 60).padStart(2, '0');
+		return h ? `${h}:${String(m).padStart(2, '0')}:${s}` : `${m}:${s}`;
+	}
 	function getActivityImage(activity: any): string | null {
 		const img = activity.assets?.large_image;
 		if (!img) return null;
@@ -125,6 +146,19 @@
 							<span>{activity.name}</span>
 							{#if activity.details}<span>{activity.details}</span>{/if}
 							{#if activity.state}<span>{activity.state}</span>{/if}
+							{#if start}
+								<span class="activity-time">
+									{formatTime(elapsed)}{end ? ` / ${formatTime(end - start)}` : ' elapsed'}
+								</span>
+							{/if}
+							{#if start && end > start}
+								<div class="progress-bar">
+									<div
+										class="progress-fill"
+										style="width: {(elapsed / (end - start)) * 100}%"
+									></div>
+								</div>
+							{/if}
 						</div>
 					</div>
 				{/if}
@@ -191,6 +225,9 @@
 		padding: 2rem;
 	}
 
+	.activity-time {
+		font-variant-numeric: tabular-nums;
+	}
 	.name {
 		font-size: clamp(1.6rem, 5vw, 2.4rem);
 	}
@@ -326,6 +363,23 @@
 		justify-content: center;
 		gap: 0.6rem;
 		max-width: 460px;
+	}
+	.progress-bar {
+		width: 160px;
+		max-width: 100%;
+		height: 6px;
+		margin-top: 4px;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.3);
+		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+	}
+
+	.progress-fill {
+		height: 100%;
+		border-radius: inherit;
+		background: #2fb8c9;
+		transition: width 1s linear;
 	}
 
 	.identity {
